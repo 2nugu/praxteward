@@ -4,7 +4,7 @@
 Usage: python3 tools/package.py [out.zip]     default: dist/praxteward.zip
 Runs validate.py first and packages exactly the files it validates.
 """
-import os, sys, zipfile
+import os, sys, time, zipfile
 
 here = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, here)
@@ -21,7 +21,15 @@ if not os.path.exists(os.path.join(root, "LICENSE")):
     print("WARNING: LICENSE missing. Fine for a personal install; add it before a public release.")
 files = packaged_files(root)
 os.makedirs(os.path.dirname(out), exist_ok=True)
-with zipfile.ZipFile(out, "w", zipfile.ZIP_DEFLATED) as z:
+tmp = out + ".tmp"
+with zipfile.ZipFile(tmp, "w", zipfile.ZIP_DEFLATED) as z:
     for rel in files:
         z.write(os.path.join(root, rel), "praxteward/" + rel)
+try:
+    os.replace(tmp, out)
+except PermissionError:
+    alt = out[:-4] + time.strftime("-%Y%m%d-%H%M%S") + ".zip"
+    os.replace(tmp, alt)
+    print(f"WARNING: {out} is locked by another program (an open zip viewer, Explorer preview, or upload dialog); wrote {alt} instead.")
+    out = alt
 print(f"OK: {summary}\nwrote {out} ({len(files)} files)")
