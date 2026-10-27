@@ -1,0 +1,12 @@
+{
+  "name": "praxteward",
+  "description": "Praxteward agent skill",
+  "owner": { "name": "2nugu", "url": "https://github.com/2nugu" },
+  "plugins": [
+    {
+      "name": "praxteward",
+      "source": "./",
+      "description": "Plan, divide, deepen, verify, and keep work recoverable; learns ways of working from experience."
+    }
+  ]
+}

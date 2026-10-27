@@ -47,7 +47,8 @@ evals/                trigger cases and regression tests for both scripts
 | Host | Steps | Explicit call |
 |---|---|---|
 | claude.ai / Claude desktop | Download `praxteward.zip` from Releases (or run `python tools/package.py`) and upload it under Settings → Capabilities/Features → Skills. Requires code execution. | `praxteward <mode>`, `praxteward inspect` |
-| Claude Code | `git clone https://github.com/2nugu/praxteward.git ~/.claude/skills/praxteward` (personal) or into `<project>/.claude/skills/praxteward` | `/praxteward` |
+| Claude Code (plugin) | `claude plugin marketplace add 2nugu/praxteward` then `claude plugin install praxteward@praxteward`; update with `claude plugin update praxteward@praxteward` | `/praxteward:praxteward` |
+| Claude Code (plain skill) | `git clone https://github.com/2nugu/praxteward.git ~/.claude/skills/praxteward` (personal) or into `<project>/.claude/skills/praxteward` | `/praxteward` |
 | Claude API | Upload the zip via the Skills API (`/v1/skills`); reference its `skill_id` in the container with the code execution tool | — |
 | Codex CLI / IDE | `git clone https://github.com/2nugu/praxteward.git ~/.agents/skills/praxteward` (user) or into `<repo>/.agents/skills/praxteward`; restart Codex if it does not appear | `$praxteward` or `/skills` |
 | ChatGPT | Distribute as a plugin, or create with `@skill-creator` from this folder | `@praxteward` |
