@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 3,
   "skill": "praxteward",
   "fast_path": {
     "applies_when": [
@@ -8,42 +8,138 @@
       "fully_specified"
     ],
     "forbids": [
+      "plan",
       "read_records",
-      "copy_procedure_steps",
       "delegate",
       "report_block"
     ],
-    "exit_to_gate_when": [
+    "allows": [
+      "episode_on_operator_correction"
+    ],
+    "exit_when": [
       "scope_spreads",
       "touches_recorded_decision",
       "unexpected_failure"
     ]
   },
-  "gate": {
+  "work_loop": [
+    "plan",
+    [
+      "explore",
+      "reason"
+    ],
+    "execute",
+    "integrate"
+  ],
+  "depth": {
+    "levels": [
+      "skim",
+      "standard",
+      "deep"
+    ],
     "axes": [
+      "value",
       "uncertainty",
       "blast_radius"
     ],
-    "matrix": {
-      "low_low": "fast_path",
-      "low_high": [
-        "execute"
-      ],
-      "high_low": [
-        "orient_light",
-        "regate"
-      ],
-      "high_high": [
-        "orient",
-        "reason",
-        "execute",
-        "reconcile"
-      ]
-    },
+    "deep_runs": "explore",
     "fork_classes": {
       "empirical": "discriminating_check",
       "preference": "ask_operator_once",
       "consequential": "propose_and_wait"
+    }
+  },
+  "allocation": {
+    "owners": [
+      "self",
+      "delegate",
+      "operator",
+      "tool"
+    ],
+    "delegate_when": [
+      "independent_parallel_unit",
+      "unanchored_verification",
+      "bulk_reading"
+    ],
+    "operator_questions": "batched_at_review_points"
+  },
+  "autonomy": {
+    "presence": [
+      "here",
+      "checking_in",
+      "away"
+    ],
+    "authority": {
+      "A0": "ask_before_each_decision",
+      "A1": "decide_reversible_within_scope",
+      "A2": "also_preference_choices_with_D_record",
+      "A3": "also_bounded_scope_extension"
+    },
+    "tempo": [
+      "careful",
+      "push"
+    ],
+    "default": {
+      "presence": "here",
+      "authority": "A1",
+      "tempo": "careful"
+    },
+    "push": [
+      "depth_cap_standard_except_blocking",
+      "timebox_units",
+      "decide_reversible_forks",
+      "max_one_batched_question",
+      "report_verified_units"
+    ],
+    "never": [
+      "irreversible_or_destructive",
+      "delete_or_overwrite_outside_unit_files",
+      "push_deploy_publish_or_message",
+      "spending",
+      "security_permission_ci_infra_changes",
+      "run_untrusted_code",
+      "reverse_recorded_operator_decision"
+    ],
+    "stalling": [
+      "exceeds_timebox_without_passing",
+      "five_actions_without_new_evidence",
+      "same_failure_repeats"
+    ],
+    "progress_metric": "units_passed_checks",
+    "fork_by_authority": {
+      "empirical": {
+        "A0": "ask",
+        "A1": "check",
+        "A2": "check",
+        "A3": "check"
+      },
+      "preference": {
+        "A0": "ask",
+        "A1": "ask_once",
+        "A2": "choose_and_record",
+        "A3": "choose_and_record"
+      },
+      "scope_extension": {
+        "A0": "ask",
+        "A1": "ask",
+        "A2": "ask",
+        "A3": "extend_if_reversible_in_project_dirs_le_20pct_budget"
+      },
+      "consequential": {
+        "A0": "park",
+        "A1": "park",
+        "A2": "park",
+        "A3": "park"
+      }
+    },
+    "persistence": {
+      "stored_in": "recovery_summary_settings_line",
+      "operator_message_sets": "presence_here",
+      "above_A1_expires": [
+        "charter_stop",
+        "session_end"
+      ],
+      "new_session": "defaults"
     }
   },
   "roles": {
@@ -59,7 +155,83 @@
     }
   },
   "modes": {
+    "plan": {
+      "group": "work",
+      "procedure": "modes/plan.md",
+      "steps": [
+        "L1",
+        "L2",
+        "L3",
+        "L4",
+        "L5",
+        "L6",
+        "L7",
+        "L8",
+        "L9"
+      ],
+      "exit": "frame_and_unit_table"
+    },
+    "explore": {
+      "group": "work",
+      "procedure": "modes/explore.md",
+      "steps": [
+        "X1",
+        "X2",
+        "X3",
+        "X4",
+        "X5",
+        "X6",
+        "X7",
+        "X8"
+      ],
+      "exit": "findings_confirmed_inferred_open"
+    },
+    "reason": {
+      "group": "work",
+      "procedure": "modes/reason.md",
+      "steps": [
+        "R1",
+        "R2",
+        "R3",
+        "R4",
+        "R5",
+        "R6",
+        "R7",
+        "R8",
+        "R9"
+      ],
+      "exit": "decision_record"
+    },
+    "execute": {
+      "group": "work",
+      "procedure": "modes/execute.md",
+      "steps": [
+        "E1",
+        "E2",
+        "E3",
+        "E4",
+        "E5",
+        "E6",
+        "E7",
+        "E8"
+      ],
+      "exit": "unit_with_check_and_record"
+    },
+    "integrate": {
+      "group": "work",
+      "procedure": "modes/integrate.md",
+      "steps": [
+        "G1",
+        "G2",
+        "G3",
+        "G4",
+        "G5",
+        "G6"
+      ],
+      "exit": "verified_deliverable"
+    },
     "orient": {
+      "group": "continuity",
       "procedure": "modes/orient.md",
       "steps": [
         "O1",
@@ -76,36 +248,33 @@
       ],
       "exit": "state_brief"
     },
-    "reason": {
-      "procedure": "modes/reason.md",
+    "checkpoint": {
+      "group": "continuity",
+      "procedure": "modes/checkpoint.md",
       "steps": [
-        "R1",
-        "R2",
-        "R3",
-        "R4",
-        "R5",
-        "R6",
-        "R7",
-        "R8",
-        "R9"
+        "K1",
+        "K2",
+        "K3",
+        "K4",
+        "K5"
       ],
-      "exit": "decision_record"
+      "exit": "recovery_summary"
     },
-    "execute": {
-      "procedure": "modes/execute.md",
+    "recover": {
+      "group": "continuity",
+      "procedure": "modes/recover.md",
       "steps": [
-        "E1",
-        "E2",
-        "E3",
-        "E4",
-        "E5",
-        "E6",
-        "E7",
-        "E8"
+        "V1",
+        "V2",
+        "V3",
+        "V4",
+        "V5",
+        "V6"
       ],
-      "exit": "change_with_evidence_and_feature_record"
+      "exit": "resume_point"
     },
     "reconcile": {
+      "group": "continuity",
       "procedure": "modes/reconcile.md",
       "steps": [
         "N1",
@@ -122,30 +291,8 @@
       ],
       "exit": "reconciliation_delta"
     },
-    "checkpoint": {
-      "procedure": "modes/checkpoint.md",
-      "steps": [
-        "K1",
-        "K2",
-        "K3",
-        "K4",
-        "K5"
-      ],
-      "exit": "recovery_summary"
-    },
-    "recover": {
-      "procedure": "modes/recover.md",
-      "steps": [
-        "V1",
-        "V2",
-        "V3",
-        "V4",
-        "V5",
-        "V6"
-      ],
-      "exit": "resume_point"
-    },
     "intake": {
+      "group": "continuity",
       "procedure": "modes/intake.md",
       "steps": [
         "I1",
@@ -158,19 +305,21 @@
       "exit": "ordered_queue"
     },
     "advance": {
+      "group": "continuity",
       "procedure": "modes/advance.md",
       "steps": [
-        "A1",
-        "A2",
-        "A3",
-        "A4",
-        "A5",
-        "A6",
-        "A7"
+        "U1",
+        "U2",
+        "U3",
+        "U4",
+        "U5",
+        "U6",
+        "U7"
       ],
       "exit": "away_report"
     },
     "compile": {
+      "group": "continuity",
       "procedure": "modes/compile.md",
       "steps": [
         "P1",
@@ -182,7 +331,48 @@
         "P7",
         "P8"
       ],
-      "exit": "spec_manual_report"
+      "exit": "final_deliverable"
+    },
+    "distill": {
+      "group": "practice",
+      "procedure": "modes/distill.md",
+      "steps": [
+        "S1",
+        "S2",
+        "S3",
+        "S4",
+        "S5",
+        "S6",
+        "S7"
+      ],
+      "exit": "candidate_cards_or_evidence"
+    },
+    "evolve": {
+      "group": "practice",
+      "procedure": "modes/evolve.md",
+      "steps": [
+        "Y1",
+        "Y2",
+        "Y3",
+        "Y4",
+        "Y5",
+        "Y6"
+      ],
+      "exit": "card_decision"
+    },
+    "automate": {
+      "group": "practice",
+      "procedure": "modes/automate.md",
+      "steps": [
+        "M1",
+        "M2",
+        "M3",
+        "M4",
+        "M5",
+        "M6",
+        "M7"
+      ],
+      "exit": "automation_or_proposal"
     }
   },
   "queue": {
@@ -230,7 +420,9 @@
     ],
     "queue_empty_during_run": "reconcile_lookahead",
     "explicit_invocation": "named_mode",
-    "explicit_inspect": "inspect_read_only"
+    "explicit_inspect": "inspect_read_only",
+    "practice_review_due": "evolve",
+    "episodes_pending": "distill"
   },
   "report": {
     "required": [
@@ -256,13 +448,11 @@
   },
   "records": {
     "checker": "scripts/check_records.py",
-    "feature_optional": [
-      "Supersedes"
+    "levels": [
+      "minimal",
+      "standard"
     ],
-    "decision_optional": [
-      "Supersedes"
-    ],
-    "feature_required": [
+    "work_required": [
       "Status",
       "Intent",
       "How",
@@ -270,8 +460,11 @@
       "Rationale",
       "Verification",
       "Locators",
-      "Operation",
+      "Use",
       "Limits"
+    ],
+    "work_optional": [
+      "Supersedes"
     ],
     "decision_required": [
       "Context",
@@ -281,13 +474,16 @@
       "invalidated_if",
       "Affects"
     ],
-    "locator_format": "`path::symbol` — what it confirms",
+    "decision_optional": [
+      "Supersedes"
+    ],
+    "locator_format": "`path::anchor` — what it confirms",
     "volume_close_dispositions": [
       "carried",
       "deferred",
       "dropped"
     ],
-    "done_requires": "complete_feature_record"
+    "done_requires": "complete_work_record"
   },
   "output_checks": {
     "checker": "scripts/tell_scan.py",
@@ -333,21 +529,107 @@
       "log",
       "queue",
       "volumes_dir",
+      "records",
       "activation",
-      "verify_cmd",
-      "coverage_ignore"
+      "coverage_ignore",
+      "practice_dir"
     ],
     "defaults": {
       "index": "docs/INDEX.md",
       "log": "docs/LOG.md",
       "queue": "docs/QUEUE.md",
       "volumes_dir": "docs/volumes",
-      "activation": "auto"
+      "activation": "auto",
+      "records": "standard"
     },
     "activation": [
       "auto",
       "session",
       "explicit"
+    ],
+    "records": [
+      "minimal",
+      "standard"
+    ]
+  },
+  "practice": {
+    "checker": "scripts/check_practice.py",
+    "card_required": [
+      "Version",
+      "Status",
+      "Kind",
+      "Scope",
+      "Task type",
+      "Objective",
+      "Applies when",
+      "Not when",
+      "Decision factors",
+      "Procedure",
+      "Verification",
+      "Assumptions",
+      "Review triggers",
+      "Simpler alternative",
+      "Transfer",
+      "Automation",
+      "Evidence",
+      "History"
+    ],
+    "statuses": [
+      "candidate",
+      "trial",
+      "standard",
+      "deprecated"
+    ],
+    "signals": [
+      "rework",
+      "correction",
+      "failure",
+      "surprise",
+      "repeat",
+      "misfit"
+    ],
+    "episode_format": "- Episode E-<project>-<YYYYMMDD>-<n>: type=; card=P-NNN@version|none; outcome=met|partial|missed; rework=n; corrections=n; signal=; note=",
+    "locations": [
+      "practice_dir",
+      "~/.praxteward/practice (approved)",
+      "docs/practice (general staged)",
+      "none (reply only)"
+    ],
+    "cost_rules": [
+      "episode_only_on_signal",
+      "distill_reads_signal_episodes_only",
+      "evolve_reads_due_cards_only",
+      "plan_reads_index_and_max_two_cards"
+    ],
+    "card_conditional": {
+      "Replacement": "deprecated"
+    },
+    "kinds": [
+      "method",
+      "craft",
+      "check",
+      "automation"
+    ],
+    "evidence_format": "<project>/<deliverable> — met|partial|missed — E-id",
+    "distill_trigger": {
+      "pending_episodes": 3,
+      "oldest_days": 14
+    }
+  },
+  "craft": {
+    "reference": "references/craft.md",
+    "experience_frame": [
+      "receiver",
+      "situation",
+      "after_action",
+      "first_contact",
+      "use",
+      "recovery"
+    ],
+    "swap_test": true,
+    "review_at": [
+      "integrate.G5",
+      "compile.P7"
     ]
   }
 }

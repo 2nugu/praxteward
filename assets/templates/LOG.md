@@ -3,6 +3,7 @@
 ## Recovery summary  (keep at top; overwrite, do not append)
 
 - Objective / authorized scope:
+- Settings: presence=<here|checking in|away until …>; authority=<A0-A3>; tempo=<careful|push>; source="<operator's words>"
 - Last verified state: <what, evidence, commit/version>
 - In flight: <partial changes, files>
 - Blockers / unknowns:
@@ -13,8 +14,8 @@
 ### YYYY-MM-DD — <milestone or event>
 - Change / decision:
 - Evidence: <tests run, results, references>
-- Procedure learned: <approved direction | verified protocol | failure-derived correction> — conditions of validity
 - Open:
+- Episode E-<project>-<YYYYMMDD>-<n>: type=<task type>; card=<P-NNN@version|none>; outcome=<met|partial|missed>; rework=<n>; corrections=<n>; signal=<rework|correction|failure|surprise|repeat|misfit>; note=<one line>   (only when a signal fired)
 
 ## Checklist  (only when the host has no task tool; procedure step IDs, `n/a: <reason>` allowed)
 

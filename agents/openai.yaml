@@ -1,7 +1,7 @@
 interface:
   display_name: Praxteward
-  short_description: Project intent, records, queue, and verified progress
-  default_prompt: Use $praxteward to orient to this project's intent, records, and unfinished work before proceeding.
+  short_description: Plan, divide, deepen, verify, and keep work recoverable
+  default_prompt: Use $praxteward to plan this work into units with depth and owners, then carry it through to a verified result.
   icon_small: assets/icon.svg
   icon_large: assets/icon.svg
 policy:

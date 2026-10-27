@@ -8,9 +8,9 @@
 - **Choice:** A
 - **Evidence:** C-001 latency 0.4 ms vs 2.1 ms
 - **invalidated_if:** more than one worker host
-- **Affects:** F-001
-## Features
-### F-001 — Job scheduler
+- **Affects:** W-001
+## Work units
+### W-001 — Job scheduler
 - **Status:** done
 - **Intent:** run submitted jobs FIFO; accept 100 jobs/min
 - **How:** in-process FIFO via `schedule()`; retry ceiling constant
@@ -20,7 +20,7 @@
 - **Locators:**
   - `src/scheduler.py::schedule` — entry point for job submission
   - `src/scheduler.py::RETRY_MAX` — retry ceiling
-- **Operation:** set RETRY_MAX in src/scheduler.py; inspect via logs
+- **Use:** set RETRY_MAX in src/scheduler.py; inspect via logs
 - **Limits:** no persistence (X-001)
 ## Comparisons
 ### C-001 — Queue latency
@@ -28,10 +28,10 @@
 - **Setup:** 1k jobs, local
 - **Result:** 0.4 ms vs 2.1 ms
 - **Conclusion:** in-process
-- **Feeds:** D-001, F-001
+- **Feeds:** D-001, W-001
 ## Open items
-- [x] F-002 retry policy — carried
+- [x] W-002 retry policy — carried
 - [x] persistence — deferred X-001
 ## Exit summary
-- **Established:** F-001, D-001
-- **Carried forward:** F-002
+- **Established:** W-001, D-001
+- **Carried forward:** W-002

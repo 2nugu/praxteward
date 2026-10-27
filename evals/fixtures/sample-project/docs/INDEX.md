@@ -4,11 +4,11 @@
 |---|---|---|---|---|
 | 01 | volumes/vol-01.md | Baseline | closed | yes |
 | 02 | volumes/vol-02.md | Scale-out | active | — |
-## Feature registry
+## Work registry
 | ID | Title | Status | Vol | depends_on |
 |---|---|---|---|---|
-| F-001 | Job scheduler | done | 01 | — |
-| F-002 | Retry policy | planned | 02 | F-001 |
+| W-001 | Job scheduler | done | 01 | — |
+| W-002 | Retry policy | planned | 02 | W-001 |
 ## Decisions
 | ID | Decision | invalidated_if | Vol |
 |---|---|---|---|

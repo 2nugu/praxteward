@@ -17,24 +17,23 @@
 - **Choice:** <option>
 - **Evidence:** <measurements, references, C-IDs>
 - **invalidated_if:** <condition>
-- **Affects:** F-001
+- **Affects:** W-001
 - **Supersedes:** <D-ID or —>
 
-## Features
+## Work units
 
-### F-001 — <title>
-- **Status:** planned  (planned | active | done | superseded by F-x)
-- **Intent:** <needed behavior + acceptance criteria>
-- **How:** <technique, algorithm, library@version, data shape, interfaces>
+### W-001 — <title>
+- **Status:** planned  (planned | active | done | superseded by W-x)
+- **Intent:** <what it must achieve, for whom, and acceptance criteria>
+- **How:** <method, tools and versions, sources, data shape, structure or interfaces>
 - **Alternatives:** <option — how compared — result>
 - **Rationale:** <why it fits here; reversal condition or D-ID>
-- **Verification:** <command/procedure — observed result — commit/date; untested boundaries>
+- **Verification:** <command, procedure, or source check — observed result — commit/date; what was not checked>
 - **Locators:**
-  - `src/module.py::function_name` — <what to check here>
-  - `config/app.yaml::RETRY_MAX` — <what this value controls>
-- **Operation:** <how the operator uses/configures/inspects/recovers it, or "internal: reason">
+  - `path/to/file::anchor` — <what to check here>
+- **Use:** <how the reader or user applies, configures, inspects, or recovers it, or "internal: reason">
 - **Limits:** <known gaps, assumptions, deferred IDs>
-- **Supersedes:** <F-ID or —>
+- **Supersedes:** <W-ID or —>
 
 ## Comparisons
 
@@ -43,7 +42,7 @@
 - **Setup:** <data, environment, commands>
 - **Result:** <numbers>
 - **Conclusion:** <…>
-- **Feeds:** D-001, F-001
+- **Feeds:** D-001, W-001
 
 ## Open items
 

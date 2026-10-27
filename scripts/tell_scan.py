@@ -116,7 +116,7 @@ def check_text(lines, add):
         m = EMOJI.search(t)
         if m:
             add("T15", i, m.group(0))
-        if not re.match(r"^\s*[-*] `", lines[i]):
+        if not re.match(r"^\s*([-*] `|[-*] \*\*[^*]+:\*\*|\s+[-*] |\d+\. )", lines[i]):
             dashes += t.count("—")
         words += len(t.split())
         bolds += len(re.findall(r"\*\*[^*]+\*\*", re.sub(r"^\s*[-*]\s+\*\*[^*]+:\*\*", "", t)))

@@ -47,7 +47,8 @@ Other hosts: use their lifecycle hooks; Codex requires approving hooks via `/hoo
 4. Own records: only the coordinator, or the workbench on its behalf, writes the index and log.
 5. Queue: append every incoming operator message to the queue file before the model sees it, so mid-task messages survive compaction.
 6. Wake: for `operator_away`, schedule resumptions that re-enter Advance from the recovery summary and queue; enforce the charter's budget and stop predicates outside the model.
-7. Learn: collect routing misses and false positives from the log's `Routing notes` and adjust the description or hooks from repeated patterns.
+7. Practice: keep the practice directory in version control; run `check_practice.py` on a schedule (for example weekly) and inject the due list into the next session; pass execution metrics (duration, retries, operator interventions) into episode lines when the host can measure them.
+8. Learn: collect routing misses and false positives from the log's `Routing notes` and adjust the description or hooks from repeated patterns.
 
 ## Limits of prompting
 

@@ -8,7 +8,7 @@
 <!-- tell-ok-file: T16 check definitions quote the patterns -->
 <!-- tell-ok-file: T17 check definitions quote the patterns -->
 
-Apply to every deliverable: records, logs, reports, compiled documents, code, and replies. Fix each finding and check again before delivery.
+Apply to files and to deliverables outside the fast path: records, logs, reports, compiled documents, slide text, and code. Replies follow the Block rules and the craft rules for replies. Fix each finding and check again before delivery.
 
 ## Block (never delivered)
 
@@ -52,4 +52,4 @@ Lead with the result. Prefer specific nouns, verbs, numbers with units, and one 
 
 1. Run `python3 <skill-dir>/scripts/tell_scan.py <changed files>`. It detects T01, T02, T10 to T17, T20, T21, emoji in prose (T15), and emoji in code (T24). T03 to T06, T18, T19, T22, and T23 need your judgment.
 2. Rate the draft 1 to 5 on Evidence, Precision, Economy, Fit (to reader and task), and Traceability. Revise anything below 3. Record the ratings in the Report block or log, never in the artifact.
-3. For a compiled document or another high-stakes deliverable, when subagents exist, give it to a delegate with no prior context for review against these checks, and fix what it finds.
+3. For high-stakes deliverables, run the generic-feel review in [craft](craft.md).

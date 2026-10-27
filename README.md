@@ -1,6 +1,6 @@
 # Praxteward
 
-An agent skill for long-running software and research projects. It keeps intent, architectural decisions, roadmap, verified progress, and recoverable continuity coherent across sessions, models, subagents, and hosts, and stays out of the way on trivial edits.
+An agent skill for doing substantial work of any kind well, and getting better at it: software, research, reports and presentations, data analysis, reverse engineering, or hobby projects. It plans the work, splits it into units, sets how deep each one goes, assigns owners (itself, parallel subagents, you, or a script), integrates and verifies the result, runs on its own within an authority you set, keeps everything recoverable across sessions, and learns from experience which ways of working to reuse, revise, retire, or automate. Small edits take a fast path.
 
 Standard `SKILL.md` format. Works with Claude (claude.ai, Claude Code, API), OpenAI Codex and ChatGPT, and custom agent workbenches.
 
@@ -11,25 +11,30 @@ Self-contained: no other skills or packages are required. The scripts need Pytho
 | Need | How |
 |---|---|
 | Stay light on small tasks | A fast path at the top of `SKILL.md` handles local, reversible, fully specified changes directly |
-| Choose depth deliberately | Gate on uncertainty × blast radius; forks classified as empirical, preference, or consequential |
-| Follow procedures, not vibes | Nine modes (Orient, Reason, Execute, Reconcile, Checkpoint, Recover, Intake, Advance, Compile), each a procedure of numbered steps with an exit artifact; `praxteward inspect` reports without editing |
-| Records worth reading | Feature records state technique, alternatives compared, rationale, verification evidence, and `path::symbol` locators, so later work does not re-read the implementation |
-| Documents that grow with the project | Volumes are numbered by phase; closing one forces every open item to be carried, deferred, or dropped |
-| Nothing missed | `scripts/check_records.py` checks fields, locators, registry, volume closure, and changed-file coverage since a git ref |
-| Queues and unattended work | Intake orders pending and mid-task requests; Advance works within a charter while you are away and parks decisions |
-| One final document | Compile assembles a specification, operator manual, and project report from the records |
-| Output without machine tells | Block and Fix checks for prose and code, scanned by `scripts/tell_scan.py`, with inline overrides that require a reason |
+| Plan before doing | Plan frames the goal, audience, and done criteria, then splits the work into units with output, depth, owner, dependencies, and a check |
+| Go as deep as the work needs | Each unit is skim, standard, or deep; deep units run Explore: question ladder, competing hypotheses, primary sources, a discriminating check, a stop rule |
+| Divide the work | Owners per unit: self, parallel subagents with briefs, the operator (batched questions at review points), or a script |
+| Put it back together | Integrate merges units, resolves conflicts, checks the whole against the goal, and verifies end to end |
+| Made for someone, not generated | Craft rules: an experience frame (who receives it, in what situation, what they do next), a swap test against generic content, real material instead of filler, and design rules for writing, slides, guides, charts, interfaces, code, and replies, plus a generic-feel review |
+| Decide on purpose | Reason records options, evidence, and the condition that would reverse a decision |
+| Work on its own, safely | Three settings (presence, authority A0 to A3, tempo) read from what you say, such as "keep going while I sleep" or "stop circling"; fixed limits it never crosses; a stalling rule; progress counted as verified units |
+| Extend without editing the core | New domains arrive as practice cards (kinds: method, craft, check, automation) in a practice directory you own; the skill files stay unchanged |
+| Learn how to work better | Practice cards capture ways of working with their conditions, assumptions, simpler alternative, and evidence. Learning fires only on signals (rework, corrections, failures, surprises, repeats, misfits); Distill, Evolve, and Automate promote, revise, retire, or automate cards by evidence, never by scanning everything |
+| Keep long work recoverable | Orient, Checkpoint, Recover, Reconcile, Intake, Advance, and Compile handle sessions, interruptions, queues, unattended work, and final deliverables |
+| Records worth reading | Work records state method, alternatives, rationale, verification, and `path::anchor` locators (symbol, heading, slide, cell, offset); `records: minimal` keeps only a log for casual work |
+| Nothing missed | `scripts/check_records.py` checks fields, locators, registry, volume closure, and changed-file coverage |
+| Output without machine tells | Block and Fix checks for prose and code, scanned by `scripts/tell_scan.py` |
 | Subagents and workbenches | Coordinator and delegate roles, a common report block, and `contract.json` for deterministic routing |
 
 ## Repository layout
 
 ```
-SKILL.md              entry point: fast path, gate, modes, rules
+SKILL.md              entry point: fast path, work loop, depth, allocation, continuity, records, output
 contract.json         machine-readable modes, events, report, record, and output-check schema
-modes/                one file per mode, numbered steps
-references/           records rules, output checks, principles
-assets/templates/     INDEX, VOLUME, LOG, QUEUE, AWAY-REPORT, BRIEF
-scripts/              check_records.py, tell_scan.py (run by the agent)
+modes/                one procedure per mode (5 work, 7 continuity, 3 practice), numbered steps
+references/           craft, records, practice, output checks, principles
+assets/templates/     INDEX, VOLUME, LOG, QUEUE, AWAY-REPORT, BRIEF, CARD, PRACTICE-INDEX
+scripts/              check_records.py, check_practice.py, tell_scan.py (run by the agent)
 agents/openai.yaml    Codex and ChatGPT presentation and policy
 --- repository only (not packaged) ---
 docs/integration.md   hooks, activation policy, workbench responsibilities
@@ -66,7 +71,9 @@ index: docs/INDEX.md
 log: docs/LOG.md
 queue: docs/QUEUE.md
 volumes_dir: docs/volumes
+records: standard        # minimal | standard
 activation: session      # auto | session | explicit
+practice_dir: ~/.praxteward/practice   # general practice cards (optional)
 coverage_ignore:
   - "*.lock"
 ```
@@ -75,23 +82,12 @@ coverage_ignore:
 
 ## Recommended global instructions
 
-The skill holds procedures. Global instructions should hold the rules that apply even when the skill is not loaded, and say when to load it. Add or merge into your personal preferences (Claude) or `AGENTS.md` (Codex):
+The skill holds procedures. Global instructions only need the rules that apply when the skill is not loaded, and when to load it. Add to your personal preferences (Claude) or `AGENTS.md` (Codex):
 
 ```markdown
-# Adaptive Workflow & Learning (add or merge)
-
-- Match workflow complexity to uncertainty and blast radius: handle local, reversible, fully specified changes directly, even when a project skill is loaded.
-- Optimize for verified objective completion and total expected effort, including rework, not minimal immediate token usage.
-- Act autonomously within authorized boundaries. Escalate consequential decisions rather than routine implementation details. Never drop a queued or mid-task request; apply amendments at the next safe point. When unattended, park decisions that need the operator and continue independent work.
-
-# Project Continuity
-
-Maintain two canonical records: **Project Documents** (intent, design rationale, indexed roadmap, acceptance criteria; each verified completion records the technique used, alternatives compared, rationale, verification evidence, and code locators, so later work need not re-read the implementation and the records can compile into a specification, operator manual, and report) and **Project Logs** (execution evidence, decisions, successful and failed procedures, and a compact recovery summary).
-
-- Record work when it is verified, not at session end. Keep records concise and actionable rather than transcripts.
-- On project start, session restart, or orientation requests, read the index and recovery summary before extensive code exploration.
-- Before context loss, checkpoint; after interruption, reconcile records with actual artifacts and resume from the last verified checkpoint.
-- In sessions working on a project with Praxteward records, load the Praxteward skill once at session start; it exits quickly for trivial tasks. If the skill is unavailable, apply the rules above minimally.
+- Long-running projects: use the Praxteward skill, loaded once per session. Without it, read the project index and recovery summary first, and record verified work with evidence and locators.
+- Handle local, reversible, fully specified changes directly, even when a project skill is loaded.
+- Never drop a queued or mid-task request. When unattended, park decisions that need me and continue independent work.
 ```
 
 General judgment rules (objective reconstruction, evidence over agreement, scope discipline, verification) can live in your own instructions; otherwise the skill applies `references/principles.md`.
@@ -102,6 +98,7 @@ General judgment rules (objective reconstruction, evidence over agreement, scope
 python tools/validate.py                  # package consistency
 bash evals/run_record_tests.sh            # record-checker regression tests
 bash evals/run_tell_tests.sh              # output-check regression tests
+bash evals/run_practice_tests.sh          # practice-card regression tests
 python scripts/tell_scan.py <files>       # check docs or code before delivery
 python scripts/check_records.py <project-root> --since <git-ref>
 python tools/package.py                   # dist/praxteward.zip

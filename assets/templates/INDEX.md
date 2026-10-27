@@ -1,6 +1,6 @@
 # Project Index
 
-Objective: <one sentence: what the program must achieve for its operator>
+Objective: <one sentence: what the project must achieve, and for whom>
 Active volume: <NN>  |  Log: <path>  |  Queue: <path>
 Last reconcile: <commit>
 
@@ -10,11 +10,11 @@ Last reconcile: <commit>
 |---|---|---|---|---|
 | 01 | volumes/vol-01.md | <phase name> | active | — |
 
-## Feature registry  (current truth; one row per F-ID)
+## Work registry  (current truth; one row per W-ID)
 
 | ID | Title | Status | Vol | depends_on |
 |---|---|---|---|---|
-| F-001 | <title> | planned | 01 | — |
+| W-001 | <title> | planned | 01 | — |
 
 ## Decisions
 

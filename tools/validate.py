@@ -110,13 +110,21 @@ def validate(root):
 
     checker = read(contract["records"]["checker"])
     tmpl = read("assets/templates/VOLUME.md")
-    for key, const in (("feature_required", "REQUIRED_F"), ("decision_required", "REQUIRED_D")):
+    for key, const in (("work_required", "REQUIRED_W"), ("decision_required", "REQUIRED_D")):
         m = re.search(rf"^{const} = (\[.*?\])", checker, re.S | re.M)
         if not m or ast.literal_eval(m.group(1)) != contract["records"][key]:
             errors.append(f"contract records.{key} != {const} in checker")
         for k in contract["records"][key]:
             if f"- **{k}:**" not in tmpl:
                 errors.append(f"VOLUME template lacks field {k}")
+
+    card = read("assets/templates/CARD.md")
+    m = re.search(r"^REQUIRED_CARD = (\[.*?\])", read(contract["practice"]["checker"]), re.S | re.M)
+    if not m or ast.literal_eval(m.group(1)) != contract["practice"]["card_required"]:
+        errors.append("contract practice.card_required != REQUIRED_CARD in checker")
+    for k in contract["practice"]["card_required"]:
+        if f"- **{k}:**" not in card:
+            errors.append(f"CARD template lacks field {k}")
 
     oc = contract["output_checks"]
     defined = re.findall(r"^- (T\d+) ", read("references/output.md"), flags=re.M)

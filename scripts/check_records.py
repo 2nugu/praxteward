@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Verify praxteward project records are substantive, consistent, and complete.
 
+With `records: minimal` in .praxteward.yaml only the log is checked for existence.
+
 Usage: python3 check_records.py <project_root> [--since <git-ref> | --since last]
 Reads <project_root>/.praxteward.yaml (keys: index, log, volumes_dir,
 coverage_ignore); defaults: docs/INDEX.md, docs/LOG.md, docs/volumes.
@@ -10,16 +12,16 @@ Exit 1 if any error is found. Standard library only.
 import fnmatch, os, re, subprocess, sys
 from collections import Counter
 
-ID_RE = r"[FDCX]-\d{3,}"
-REQUIRED_F = ["Status", "Intent", "How", "Alternatives", "Rationale",
-              "Verification", "Locators", "Operation", "Limits"]
+ID_RE = r"[WDCX]-\d{3,}"
+REQUIRED_W = ["Status", "Intent", "How", "Alternatives", "Rationale",
+              "Verification", "Locators", "Use", "Limits"]
 REQUIRED_D = ["Context", "Options", "Choice", "Evidence", "invalidated_if", "Affects"]
 VAGUE = re.compile(r"^(tested|works|done|ok|implemented( as planned)?|n/?a|tbd|-|—)\.?$", re.I)
 PLACEHOLDER = re.compile(r"<[^<>\n]+>")
 
 
 def load_config(root):
-    cfg = {"index": "docs/INDEX.md", "log": "docs/LOG.md",
+    cfg = {"index": "docs/INDEX.md", "log": "docs/LOG.md", "queue": "docs/QUEUE.md", "records": "standard", "practice_dir": "docs/practice",
            "volumes_dir": "docs/volumes", "coverage_ignore": []}
     p = os.path.join(root, ".praxteward.yaml")
     if not os.path.exists(p):
@@ -58,7 +60,7 @@ def section(text, heading):
 
 
 def records(text):
-    """List of (id, fields) for ### F-/D-/C- headings, in file order."""
+    """List of (id, fields) for ### W-/D-/C- headings, in file order."""
     out = []
     for m in re.finditer(rf"^### ({ID_RE}) — (.*?)$(.*?)(?=^#{{2,3}} |\Z)", text, re.M | re.S):
         fields, cur = {}, None
@@ -71,6 +73,28 @@ def records(text):
                 fields[cur] += "\n" + line.strip()
         out.append((m.group(1), fields))
     return out
+
+
+def text_of(path):
+    """File content as text, or None for binary files (anchor not checked)."""
+    try:
+        data = open(path, "rb").read()
+    except OSError:
+        return None
+    if b"\0" in data[:8192]:
+        return None
+    try:
+        return data.decode("utf-8-sig")
+    except UnicodeDecodeError:
+        return None
+
+
+def anchor_in(anchor, text):
+    a = anchor.strip()
+    if re.fullmatch(r"[\w.]+", a):
+        a = a.split(".")[-1]
+        return re.search(rf"(?<![\w]){re.escape(a)}(?![\w])", text) is not None
+    return a.lower() in text.lower()
 
 
 def first_word(s):
@@ -93,6 +117,10 @@ def main():
     since = args[args.index("--since") + 1] if "--since" in args else None
     cfg = load_config(root)
     errors = []
+    if cfg.get("records") == "minimal":
+        ok = os.path.exists(os.path.join(root, cfg["log"]))
+        print(f"OK: minimal records, log present" if ok else f"ERROR log not found: {cfg['log']}")
+        sys.exit(0 if ok else 1)
     idx_path = os.path.join(root, cfg["index"])
     if not os.path.exists(idx_path):
         print(f"ERROR index not found: {cfg['index']} (set 'index' in .praxteward.yaml)"); sys.exit(1)
@@ -127,12 +155,12 @@ def main():
         if n > 1:
             errors.append(f"duplicate ID {rid} ({n} records)")
 
-    reg = {r["ID"]: r for r in table(index, "Feature registry") if r.get("ID")}
+    reg = {r["ID"]: r for r in table(index, "Work registry") if r.get("ID")}
     dec = {r["ID"]: r for r in table(index, "Decisions") if r.get("ID")}
     for rid, f in all_recs.items():
-        if rid.startswith("F-"):
+        if rid.startswith("W-"):
             if rid not in reg:
-                errors.append(f"{rid} missing from Feature registry")
+                errors.append(f"{rid} missing from Work registry")
                 continue
             if first_word(reg[rid].get("Status", "")) != first_word(f.get("Status", "")):
                 errors.append(f"{rid} registry status '{reg[rid].get('Status')}' != record '{f.get('Status')}'")
@@ -152,13 +180,13 @@ def main():
     # 3. Substance of records.
     locator_paths = set()
     for rid, f in all_recs.items():
-        if rid.startswith("F-"):
+        if rid.startswith("W-"):
             status = f.get("Status", "").lower()
-            if status.startswith("superseded") and not re.search(r"F-\d+", f.get("Status", "")):
+            if status.startswith("superseded") and not re.search(r"W-\d+", f.get("Status", "")):
                 errors.append(f"{rid} superseded without successor ID")
             done = status.startswith("done")
             if done:
-                for k in REQUIRED_F:
+                for k in REQUIRED_W:
                     v = f.get(k, "").strip()
                     if not v or PLACEHOLDER.search(v) or (k != "Status" and VAGUE.match(v)):
                         errors.append(f"{rid} field '{k}' empty, vague, or placeholder")
@@ -167,7 +195,7 @@ def main():
             locs = re.findall(r"^- `([^`]+)`\s*[—-]\s*(\S.*)$", f.get("Locators", ""), re.M)
             raw = re.findall(r"`([^`]+)`", f.get("Locators", ""))
             if done and not locs:
-                errors.append(f"{rid} has no locator with an explanation ('`path::symbol` — what it confirms')")
+                errors.append(f"{rid} has no locator with an explanation ('`path::anchor` — what it confirms')")
             if len(raw) > len(locs):
                 errors.append(f"{rid} has locators without an explanation")
             for loc in raw:
@@ -179,9 +207,9 @@ def main():
                 if not os.path.exists(fp):
                     errors.append(f"{rid} locator file missing: {path}")
                 elif sym and os.path.isfile(fp):
-                    src = open(fp, encoding="utf-8", errors="replace").read()
-                    if not re.search(rf"(?<![\w]){re.escape(sym.split('.')[-1])}(?![\w])", src):
-                        errors.append(f"{rid} locator symbol not found: {loc}")
+                    src = text_of(fp)
+                    if src is not None and not anchor_in(sym, src):
+                        errors.append(f"{rid} locator anchor not found: {loc}")
         elif rid.startswith("D-"):
             for k in REQUIRED_D:
                 v = f.get(k, "").strip()
@@ -225,7 +253,7 @@ def main():
         log = open(log_path, encoding="utf-8").read() if os.path.exists(log_path) else ""
         record_files = {os.path.normpath(p).replace(os.sep, "/") for p in
                         (cfg["index"], cfg["log"], cfg.get("queue", "")) if p}
-        ignore = list(cfg["coverage_ignore"]) + [cfg["volumes_dir"].rstrip("/") + "/*", ".praxteward.yaml"]
+        ignore = list(cfg["coverage_ignore"]) + [cfg["volumes_dir"].rstrip("/") + "/*", ".praxteward.yaml", "docs/practice/*", cfg["practice_dir"].rstrip("/") + "/*"]
         for p in sorted({x.strip() for x in changed if x.strip()}):
             if p in record_files or any(fnmatch.fnmatch(p, g) for g in ignore):
                 continue
@@ -233,9 +261,9 @@ def main():
                 continue
             errors.append(f"uncovered change since {since}: {p} (add a locator or record, or log 'no-record: {p} — reason')")
 
-    n_f = sum(k.startswith("F-") for k in all_recs)
-    n_done = sum(1 for k, f in all_recs.items() if k.startswith("F-") and f.get("Status", "").lower().startswith("done"))
-    summary = f"{len(vol_files)} volumes, {n_f} features ({n_done} done), {sum(k.startswith('D-') for k in all_recs)} decisions"
+    n_f = sum(k.startswith("W-") for k in all_recs)
+    n_done = sum(1 for k, f in all_recs.items() if k.startswith("W-") and f.get("Status", "").lower().startswith("done"))
+    summary = f"{len(vol_files)} volumes, {n_f} work units ({n_done} done), {sum(k.startswith('D-') for k in all_recs)} decisions"
     if errors:
         print("\n".join("ERROR " + e for e in errors)); print(f"FAIL: {len(errors)} errors; {summary}"); sys.exit(1)
     print(f"OK: {summary}")
