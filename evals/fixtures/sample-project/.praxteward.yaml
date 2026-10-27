@@ -1,0 +1,5 @@
+index: docs/INDEX.md
+log: docs/LOG.md
+volumes_dir: docs/volumes
+coverage_ignore:
+  - "*.lock"

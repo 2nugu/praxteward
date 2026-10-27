@@ -1,0 +1,8 @@
+interface:
+  display_name: Praxteward
+  short_description: Project intent, records, queue, and verified progress
+  default_prompt: Use $praxteward to orient to this project's intent, records, and unfinished work before proceeding.
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  allow_implicit_invocation: true

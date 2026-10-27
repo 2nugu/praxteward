@@ -1,0 +1,353 @@
+{
+  "version": 1,
+  "skill": "praxteward",
+  "fast_path": {
+    "applies_when": [
+      "local",
+      "reversible",
+      "fully_specified"
+    ],
+    "forbids": [
+      "read_records",
+      "copy_procedure_steps",
+      "delegate",
+      "report_block"
+    ],
+    "exit_to_gate_when": [
+      "scope_spreads",
+      "touches_recorded_decision",
+      "unexpected_failure"
+    ]
+  },
+  "gate": {
+    "axes": [
+      "uncertainty",
+      "blast_radius"
+    ],
+    "matrix": {
+      "low_low": "fast_path",
+      "low_high": [
+        "execute"
+      ],
+      "high_low": [
+        "orient_light",
+        "regate"
+      ],
+      "high_high": [
+        "orient",
+        "reason",
+        "execute",
+        "reconcile"
+      ]
+    },
+    "fork_classes": {
+      "empirical": "discriminating_check",
+      "preference": "ask_operator_once",
+      "consequential": "propose_and_wait"
+    }
+  },
+  "roles": {
+    "coordinator": {
+      "may_write_records": true,
+      "may_delegate": true
+    },
+    "delegate": {
+      "may_write_records": false,
+      "may_modify_queue": false,
+      "may_delegate": false,
+      "on_insufficient_brief": "blocked"
+    }
+  },
+  "modes": {
+    "orient": {
+      "procedure": "modes/orient.md",
+      "steps": [
+        "O1",
+        "O2",
+        "O3",
+        "O4",
+        "O5",
+        "O6"
+      ],
+      "light_steps": [
+        "O2",
+        "O3",
+        "O6"
+      ],
+      "exit": "state_brief"
+    },
+    "reason": {
+      "procedure": "modes/reason.md",
+      "steps": [
+        "R1",
+        "R2",
+        "R3",
+        "R4",
+        "R5",
+        "R6",
+        "R7",
+        "R8",
+        "R9"
+      ],
+      "exit": "decision_record"
+    },
+    "execute": {
+      "procedure": "modes/execute.md",
+      "steps": [
+        "E1",
+        "E2",
+        "E3",
+        "E4",
+        "E5",
+        "E6",
+        "E7",
+        "E8"
+      ],
+      "exit": "change_with_evidence_and_feature_record"
+    },
+    "reconcile": {
+      "procedure": "modes/reconcile.md",
+      "steps": [
+        "N1",
+        "N2",
+        "N3",
+        "N4",
+        "N5",
+        "N6",
+        "N7",
+        "N8"
+      ],
+      "lookahead_steps": [
+        "N8"
+      ],
+      "exit": "reconciliation_delta"
+    },
+    "checkpoint": {
+      "procedure": "modes/checkpoint.md",
+      "steps": [
+        "K1",
+        "K2",
+        "K3",
+        "K4",
+        "K5"
+      ],
+      "exit": "recovery_summary"
+    },
+    "recover": {
+      "procedure": "modes/recover.md",
+      "steps": [
+        "V1",
+        "V2",
+        "V3",
+        "V4",
+        "V5",
+        "V6"
+      ],
+      "exit": "resume_point"
+    },
+    "intake": {
+      "procedure": "modes/intake.md",
+      "steps": [
+        "I1",
+        "I2",
+        "I3",
+        "I4",
+        "I5",
+        "I6"
+      ],
+      "exit": "ordered_queue"
+    },
+    "advance": {
+      "procedure": "modes/advance.md",
+      "steps": [
+        "A1",
+        "A2",
+        "A3",
+        "A4",
+        "A5",
+        "A6",
+        "A7"
+      ],
+      "exit": "away_report"
+    },
+    "compile": {
+      "procedure": "modes/compile.md",
+      "steps": [
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5",
+        "P6",
+        "P7",
+        "P8"
+      ],
+      "exit": "spec_manual_report"
+    }
+  },
+  "queue": {
+    "relations": [
+      "independent",
+      "amends",
+      "supersedes",
+      "duplicate",
+      "depends_on"
+    ],
+    "status": [
+      "queued",
+      "active",
+      "done",
+      "parked",
+      "needs_decision",
+      "superseded"
+    ],
+    "never": [
+      "silent_discard",
+      "act_beyond_charter_unattended"
+    ]
+  },
+  "events": {
+    "session_start_with_records": "orient_light",
+    "session_start_activation": "orient_light",
+    "pre_compaction": "checkpoint",
+    "pause_or_handoff": "checkpoint",
+    "resume_after_interruption": "recover",
+    "test_failure": "execute",
+    "repeated_test_failure": [
+      "execute",
+      "reconcile"
+    ],
+    "milestone_tag": "reconcile",
+    "release_or_handoff": [
+      "reconcile",
+      "compile"
+    ],
+    "multiple_pending_requests": "intake",
+    "message_during_work": "intake",
+    "operator_away": [
+      "intake",
+      "advance"
+    ],
+    "queue_empty_during_run": "reconcile_lookahead",
+    "explicit_invocation": "named_mode",
+    "explicit_inspect": "inspect_read_only"
+  },
+  "report": {
+    "required": [
+      "mode",
+      "role",
+      "status",
+      "objective",
+      "evidence",
+      "state_delta",
+      "unknowns",
+      "records",
+      "next"
+    ],
+    "status": [
+      "done",
+      "partial",
+      "blocked"
+    ],
+    "role": [
+      "coordinator",
+      "delegate"
+    ]
+  },
+  "records": {
+    "checker": "scripts/check_records.py",
+    "feature_optional": [
+      "Supersedes"
+    ],
+    "decision_optional": [
+      "Supersedes"
+    ],
+    "feature_required": [
+      "Status",
+      "Intent",
+      "How",
+      "Alternatives",
+      "Rationale",
+      "Verification",
+      "Locators",
+      "Operation",
+      "Limits"
+    ],
+    "decision_required": [
+      "Context",
+      "Options",
+      "Choice",
+      "Evidence",
+      "invalidated_if",
+      "Affects"
+    ],
+    "locator_format": "`path::symbol` — what it confirms",
+    "volume_close_dispositions": [
+      "carried",
+      "deferred",
+      "dropped"
+    ],
+    "done_requires": "complete_feature_record"
+  },
+  "output_checks": {
+    "checker": "scripts/tell_scan.py",
+    "block": [
+      "T01",
+      "T02",
+      "T03",
+      "T04",
+      "T05",
+      "T06"
+    ],
+    "fix": [
+      "T10",
+      "T11",
+      "T12",
+      "T13",
+      "T14",
+      "T15",
+      "T16",
+      "T17",
+      "T18",
+      "T19",
+      "T20",
+      "T21",
+      "T22",
+      "T23",
+      "T24"
+    ],
+    "override": "tell-ok: <id> <reason>",
+    "rating_axes": [
+      "evidence",
+      "precision",
+      "economy",
+      "fit",
+      "traceability"
+    ],
+    "revise_below": 3
+  },
+  "project_config": {
+    "file": ".praxteward.yaml",
+    "keys": [
+      "index",
+      "log",
+      "queue",
+      "volumes_dir",
+      "activation",
+      "verify_cmd",
+      "coverage_ignore"
+    ],
+    "defaults": {
+      "index": "docs/INDEX.md",
+      "log": "docs/LOG.md",
+      "queue": "docs/QUEUE.md",
+      "volumes_dir": "docs/volumes",
+      "activation": "auto"
+    },
+    "activation": [
+      "auto",
+      "session",
+      "explicit"
+    ]
+  }
+}

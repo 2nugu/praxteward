@@ -1,0 +1,10 @@
+dist/
+__pycache__/
+*.pyc
+*.zip
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+.venv/
