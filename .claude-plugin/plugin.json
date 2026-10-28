@@ -1,7 +1,7 @@
 {
   "name": "praxteward",
   "displayName": "Praxteward",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "description": "Plan, divide, deepen, and verify substantial work of any kind; run it autonomously within a stated authority; keep it recoverable across sessions; and learn which ways of working to reuse, revise, retire, or automate.",
   "author": { "name": "2nugu", "url": "https://github.com/2nugu" },
   "homepage": "https://github.com/2nugu/praxteward",

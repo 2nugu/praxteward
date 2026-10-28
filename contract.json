@@ -630,6 +630,48 @@
     "review_at": [
       "integrate.G5",
       "compile.P7"
-    ]
+    ],
+    "reduce_path": true,
+    "design": {
+      "reference": "references/design.md",
+      "sections": [
+        "priority",
+        "reduction",
+        "boundaries",
+        "overlays",
+        "color",
+        "type_spacing",
+        "finish"
+      ],
+      "color_check": "scripts/contrast.py",
+      "review_at": [
+        "integrate.G5",
+        "compile.P7"
+      ],
+      "principles": {
+        "perception": [
+          "purpose_first",
+          "hierarchy",
+          "contrast",
+          "proximity",
+          "alignment",
+          "repetition",
+          "restraint"
+        ],
+        "use": [
+          "signifiers",
+          "feedback",
+          "mapping",
+          "constraints_forgiveness",
+          "recognition_over_recall",
+          "familiarity"
+        ],
+        "effort_access": [
+          "fewer_choices",
+          "reachable_targets",
+          "access_for_all"
+        ]
+      }
+    }
   }
 }

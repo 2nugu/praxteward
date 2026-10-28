@@ -17,6 +17,17 @@ Read before producing anything a person will read, see, run, or present. Plan re
 
 Shape the deliverable from these answers, not from a template.
 
+## Reduce the path
+
+Count the steps from first contact to the outcome: clicks, fields, pages, commands, or slides before the decision. Then cut.
+
+- Remove each step whose removal loses nothing; merge steps that always happen together.
+- Ask only for what cannot be inferred or defaulted. Defaults fit the most frequent receiver.
+- Undo beats confirmation for reversible actions. Confirm only what cannot be undone, and name the consequence.
+- Feedback and the next action appear where attention already is, at the point of action.
+- Advanced options, details, and appendices sit one step away. What most receivers need is never hidden there.
+- One way to do one thing. Keep a parallel path only when a distinct group of receivers needs it.
+
 ## Specificity
 
 - Swap test: a sentence, slide, section, chart, or component that could move to another project unchanged is generic. Replace it with this project's names, numbers, cases, and constraints, or cut it.
@@ -27,6 +38,8 @@ Shape the deliverable from these answers, not from a template.
 - One name per concept across the whole deliverable, taken from the reader's or the domain's vocabulary.
 
 ## Artifact rules
+
+Apply the principles in [design](design.md) to anything a person perceives or operates, including documents, command-line tools, and APIs. For visual deliverables (slides, pages, interfaces, figures, diagrams, formatted documents), also apply its rules on priority, reduction, boundaries, overlays, color, type, and finish.
 
 **Writing and reports.** Put the answer or decision in the first lines. One idea per paragraph, with a concrete example or number. Headings only where a reader navigates. Tables for comparisons across the same attributes. Figure and table captions state the takeaway, not the topic.
 
@@ -46,6 +59,6 @@ Shape the deliverable from these answers, not from a template.
 
 1. Read the deliverable as the receiver from the experience frame, in their situation.
 2. Mark every part that fails the swap test, every invented or unlabelled filler, and every structure that exists because of habit.
-3. Run `tell_scan.py` on the files for wording tells.
+3. Run `tell_scan.py` on the files for wording tells. For visual deliverables, run the design review in [design](design.md) on the rendered output.
 4. For a high-stakes deliverable with subagents available, give a delegate only the deliverable and the experience frame, and ask where it reads as generic or where the receiver would get stuck.
 5. Fix what was found. When the same fix recurs across tasks, record an episode with `signal=repeat`; it may become a craft card for that task type.

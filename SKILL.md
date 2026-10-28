@@ -77,7 +77,7 @@ Capture every request; apply mid-work amendments at the next safe point. Outside
 
 ## 5. Craft
 
-Everything delivered is made for someone. Before producing, know who receives it, in what situation, and what they must understand, decide, or do afterwards; design the first contact, the use, and the recovery when something fails or they disagree. Make it specific: a sentence, slide, section, or component that could move to another project unchanged is replaced with this project's material or cut. Use real material; label what is missing `to confirm` instead of inventing it. Recommend rather than list when the reader needs a decision. Per-artifact design rules and the generic-feel review: [craft](references/craft.md).
+Everything delivered is made for someone. Before producing, know who receives it, in what situation, and what they must understand, decide, or do afterwards; design the first contact, the use, and the recovery when something fails or they disagree. Make it specific: a sentence, slide, section, or component that could move to another project unchanged is replaced with this project's material or cut. Use real material; label what is missing `to confirm` instead of inventing it. Recommend rather than list when the reader needs a decision. Cut every step, element, and cue the receiver would not miss. Per-artifact rules, path reduction, and the generic-feel review: [craft](references/craft.md). Design principles for anything perceived or operated, and visual rules for priority, boundaries, overlays, color, and finish: [design](references/design.md), with `scripts/contrast.py` for measured color checks.
 
 ## 6. Practice
 

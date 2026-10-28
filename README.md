@@ -15,7 +15,8 @@ Self-contained: no other skills or packages are required. The scripts need Pytho
 | Go as deep as the work needs | Each unit is skim, standard, or deep; deep units run Explore: question ladder, competing hypotheses, primary sources, a discriminating check, a stop rule |
 | Divide the work | Owners per unit: self, parallel subagents with briefs, the operator (batched questions at review points), or a script |
 | Put it back together | Integrate merges units, resolves conflicts, checks the whole against the goal, and verifies end to end |
-| Made for someone, not generated | Craft rules: an experience frame (who receives it, in what situation, what they do next), a swap test against generic content, real material instead of filler, and design rules for writing, slides, guides, charts, interfaces, code, and replies, plus a generic-feel review |
+| Made for someone, not generated | Craft rules: an experience frame (who receives it, in what situation, what they do next), a swap test against generic content, real material instead of filler, rules for writing, slides, guides, charts, interfaces, code, and replies, path reduction, and a generic-feel review |
+| Design principles and visual rules with measured checks | Sixteen design principles for anything perceived or operated (perception, use, effort and access), each with a check; for visual work, priority per view, a removal pass for redundant elements and cues, grouping by space before lines and boxes, overlay rules, color roles, type and spacing scales, and a finish checklist on the rendered output; `scripts/contrast.py` measures WCAG contrast and color-vision distinguishability |
 | Decide on purpose | Reason records options, evidence, and the condition that would reverse a decision |
 | Work on its own, safely | Three settings (presence, authority A0 to A3, tempo) read from what you say, such as "keep going while I sleep" or "stop circling"; fixed limits it never crosses; a stalling rule; progress counted as verified units |
 | Extend without editing the core | New domains arrive as practice cards (kinds: method, craft, check, automation) in a practice directory you own; the skill files stay unchanged |
@@ -32,9 +33,9 @@ Self-contained: no other skills or packages are required. The scripts need Pytho
 SKILL.md              entry point: fast path, work loop, depth, allocation, continuity, records, output
 contract.json         machine-readable modes, events, report, record, and output-check schema
 modes/                one procedure per mode (5 work, 7 continuity, 3 practice), numbered steps
-references/           craft, records, practice, output checks, principles
+references/           craft, design, records, practice, output checks, principles
 assets/templates/     INDEX, VOLUME, LOG, QUEUE, AWAY-REPORT, BRIEF, CARD, PRACTICE-INDEX
-scripts/              check_records.py, check_practice.py, tell_scan.py (run by the agent)
+scripts/              check_records.py, check_practice.py, tell_scan.py, contrast.py (run by the agent)
 agents/openai.yaml    Codex and ChatGPT presentation and policy
 --- repository only (not packaged) ---
 docs/integration.md   hooks, activation policy, workbench responsibilities
@@ -100,6 +101,7 @@ python tools/validate.py                  # package consistency
 bash evals/run_record_tests.sh            # record-checker regression tests
 bash evals/run_tell_tests.sh              # output-check regression tests
 bash evals/run_practice_tests.sh          # practice-card regression tests
+bash evals/run_design_tests.sh            # contrast and color-distinctness tests
 python scripts/tell_scan.py <files>       # check docs or code before delivery
 python scripts/check_records.py <project-root> --since <git-ref>
 python tools/package.py                   # dist/praxteward.zip
