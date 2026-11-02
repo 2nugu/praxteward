@@ -1,6 +1,6 @@
 ---
 name: praxteward
-description: Plan, divide, deepen, and verify substantial work of any kind (software, research, writing, slides, design, analysis, reverse engineering, hobby projects) so the result fits the people who use it and reads as specific, crafted work; keep it recoverable across sessions; run it autonomously within a stated authority; and learn from experience which ways of working to reuse, revise, retire, or automate. Use for multi-step tasks, delegation, depth decisions, resuming or checkpointing, unattended work ("keep going while I sleep", "stop circling"), project records, or improving recurring workflows. Small edits take a fast path.
+description: Plans, divides, deepens, and verifies substantial work of any kind (software, research, writing, slides, design, analysis, reverse engineering, hobby projects) so the result fits the people who use it and reads as specific, crafted work; keeps it recoverable across sessions; runs it autonomously within a stated authority; and learns from experience which ways of working to reuse, revise, retire, or automate. Use for multi-step tasks, delegation, depth decisions, resuming or checkpointing, unattended work ("keep going while I sleep", "stop circling"), project records, or improving recurring workflows. Small edits take a fast path.
 ---
 
 # Praxteward
@@ -93,7 +93,7 @@ A practice card describes a way of working: the problem's cause, when it applies
 | **Evolve** | A card is due, contradicted, or missed twice | Card promoted, revised, narrowed, or deprecated | [evolve](modes/evolve.md) |
 | **Automate** | A standard card or frequent task type may pay to automate | Automation at the lowest sufficient level, or a proposal | [automate](modes/automate.md) |
 
-Locations, formats, thresholds, and cost rules: [practice](references/practice.md). Check with `python3 <skill-dir>/scripts/check_practice.py <practice-dir>`.
+Locations, formats, thresholds, and cost rules: [practice](references/practice.md). Templates: [CARD](assets/templates/CARD.md), [PRACTICE-INDEX](assets/templates/PRACTICE-INDEX.md). Check with `python3 <skill-dir>/scripts/check_practice.py <practice-dir>`.
 
 ## 7. Records
 
@@ -116,6 +116,7 @@ next: <next safe action>
 - Once loaded, the skill stays in context for the session. `praxteward <mode>` runs a mode; `praxteward inspect [path]` runs the record, practice, and output checks and reports without editing.
 - Host events: session start → Orient (light); pre-compaction, pause, handoff → Checkpoint; resume → Recover; test failure → Execute; repeated failure or milestone → Reconcile; release → Reconcile, then Compile; operator away → Intake, then Advance; practice review due → Evolve.
 - When this skill should have run and did not, or ran without adding value, note it under the log's Routing notes; repeated notes justify changing the description or hooks.
+- Scripts need Python 3 and its standard library only; nothing to install. Run them as shown; do not read their source to repeat the checks by hand.
 - Missing capabilities: no write access → return proposed changes; no command execution → mark behavioral claims `unverified`; no task list → checklist in the log or reply; no subagents → run units sequentially and say verification was not independent; no records → work without them and offer to start them. Never present a fallback as equivalent to the full procedure.
 
 ## 10. Output

@@ -102,6 +102,7 @@ bash evals/run_record_tests.sh            # record-checker regression tests
 bash evals/run_tell_tests.sh              # output-check regression tests
 bash evals/run_practice_tests.sh          # practice-card regression tests
 bash evals/run_design_tests.sh            # contrast and color-distinctness tests
+# evals/scenarios.json: behavior scenarios; run each with and without the skill, on Haiku, Sonnet, and Opus
 python scripts/tell_scan.py <files>       # check docs or code before delivery
 python scripts/check_records.py <project-root> --since <git-ref>
 python tools/package.py                   # dist/praxteward.zip

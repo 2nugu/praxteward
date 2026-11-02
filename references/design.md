@@ -1,5 +1,7 @@
 # Design
 
+Contents: Principles (perception, use, effort and access) · 1 Priority · 2 Reduction · 3 Grouping and boundaries · 4 Layers and overlays · 5 Color · 6 Type and spacing · 7 Finish · Design review
+
 The principles below apply to anything a person perceives or operates: documents, slides, pages, interfaces, figures, forms, command-line tools, and APIs. Sections 1 to 7 turn them into rules for visual deliverables (slides, pages, interfaces, figures, diagrams, formatted documents). Execute ranks each view (section 1) before laying it out and applies sections 2 to 6; Integrate checks section 7 and runs the design review on the rendered output. Existing brand or design-system rules take precedence; apply these inside them.
 
 ## Principles
