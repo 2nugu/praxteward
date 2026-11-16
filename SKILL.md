@@ -1,6 +1,8 @@
 ---
 name: praxteward
-description: Plans, divides, deepens, and verifies substantial work of any kind (software, research, writing, slides, design, analysis, reverse engineering, hobby projects) so the result fits the people who use it and reads as specific, crafted work; keeps it recoverable across sessions; runs it autonomously within a stated authority; and learns from experience which ways of working to reuse, revise, retire, or automate. Use for multi-step tasks, delegation, depth decisions, resuming or checkpointing, unattended work ("keep going while I sleep", "stop circling"), project records, or improving recurring workflows. Small edits take a fast path.
+description: Plans, divides, deepens, and verifies substantial work of any kind (software, research, writing, slides, design, analysis, reverse engineering, hobby projects) so the result fits the people who use it and reads as specific, crafted work; writes the smallest complete code change and reviews or audits code for bloat; builds websites with constrained taste and browser checks; removes machine-written tells from Korean text without changing its meaning; keeps it recoverable across sessions; runs it autonomously within a stated authority; and learns from experience which ways of working to reuse, revise, retire, or automate. Use for multi-step tasks, delegation, depth decisions, resuming or checkpointing, unattended work ("keep going while I sleep", "stop circling"), project records, improving recurring workflows, simplest-solution or over-engineering complaints, landing pages, or 'AI 티 제거' and 윤문 requests. Small edits take a fast path.
+license: MIT
+compatibility: Scripts need Python 3.8+ (standard library only); changed-file coverage needs git.
 ---
 
 # Praxteward
@@ -15,9 +17,11 @@ If the task is local, reversible, and fully specified (change a color, rename a 
 
 **Plan → Explore or Reason → Execute → Integrate.** Run only the stages the task needs.
 
+Choose the smallest complete solution using [solution selection](references/craft.md#solution-selection). Finish with fewer redundant rules and paths in the affected area, or explain why required growth is justified. A small solution can still require deep investigation.
+
 | Mode | Use when | Output | Procedure |
 |---|---|---|---|
-| **Plan** | Any multi-step task | Frame (goal, audience and their situation, done criteria, constraints), matching practice cards, unit table | [plan](modes/plan.md) |
+| **Plan** | Work needing coordination or investigation; bounded changes use the short procedure | Frame, relevant practice, units only when needed | [plan](modes/plan.md) |
 | **Explore** | A deep unit or open question | Findings split into confirmed, inferred, and open | [explore](modes/explore.md) |
 | **Reason** | A consequential choice | D record: options, choice, evidence, reversal condition | [reason](modes/reason.md) |
 | **Execute** | Producing a unit | The unit, its check result, its record | [execute](modes/execute.md) |
@@ -57,8 +61,8 @@ What each fork class does under each authority:
 | Consequential or irreversible | park | park | park | park |
 
 - A recorded operator preference always beats an agent choice. Any operator message sets presence to here. Authority above A1 ends at the charter's stop condition or the end of the session unless restated; a new session starts at the defaults. Keep the current settings and their source quote on one line of the recovery summary.
-- Push caps depth at standard except for blocking unknowns, holds each unit to its Plan timebox, asks at most one batched question, and reports progress as verified units. Away runs Intake, then Advance.
-- Never, at any level: irreversible or destructive actions; deleting or overwriting outside the unit's files; pushing to shared remotes, deploying, publishing, or sending messages; spending; changing security, permissions, CI, or infrastructure; running fetched or untrusted code; reversing a recorded operator decision. Park these with a recommendation.
+- Push reduces optional exploration, not checks required by uncertainty or blast radius; timebox units, batch questions, and report verified progress. Away runs Intake, then Advance.
+- Authority levels alone do not authorize destructive actions, out-of-scope changes, shared pushes, deployment, publishing, messaging, spending, or security, permission, CI, and infrastructure changes. Park them unless explicitly authorized by the operator. Task authorization covers reversible in-scope edits, replacement of superseded code, and record updates. Never run fetched or untrusted code or silently reverse recorded decisions. Host permissions always apply.
 - Progress means units that passed their checks. A unit is stalling when it exceeds its timebox without passing, when five actions in a row produce no new evidence, or when the same failure repeats. Then change approach, park it, or ask one question if the operator is here.
 
 ## 4. Continuity
@@ -77,13 +81,21 @@ Capture every request; apply mid-work amendments at the next safe point. Outside
 
 ## 5. Craft
 
-Everything delivered is made for someone. Before producing, know who receives it, in what situation, and what they must understand, decide, or do afterwards; design the first contact, the use, and the recovery when something fails or they disagree. Make it specific: a sentence, slide, section, or component that could move to another project unchanged is replaced with this project's material or cut. Use real material; label what is missing `to confirm` instead of inventing it. Recommend rather than list when the reader needs a decision. Cut every step, element, and cue the receiver would not miss. Per-artifact rules, path reduction, and the generic-feel review: [craft](references/craft.md). Design principles for anything perceived or operated, and visual rules for priority, boundaries, overlays, color, and finish: [design](references/design.md), with `scripts/contrast.py` for measured color checks.
+Everything delivered is made for someone. Before producing, know who receives it, in what situation, and what they must understand, decide, or do afterwards; design the first contact, the use, and the recovery when something fails or they disagree. Make it specific: a sentence, slide, section, or component that could move to another project unchanged is replaced with this project's material or cut. Use real material; label what is missing `to confirm` instead of inventing it. Recommend rather than list when the reader needs a decision. Cut every step, element, and cue the receiver would not miss. Settle the genre, medium, and convention before writing. Form, per-artifact rules, path reduction, and the generic-feel review: [craft](references/craft.md). Three built-in toolkits apply by task type and run as commands:
+
+| Toolkit | Applies to | Commands | Procedure |
+|---|---|---|---|
+| Lean code | Any code change, review, or dependency choice | `praxteward lean lite\|full\|ultra\|off`, `praxteward review`, `praxteward audit`, `praxteward debt` | [lean](references/lean.md) |
+| Web pages | Websites and landing pages | `praxteward web` | [web](references/web.md) |
+| Korean prose | Writing or revising Korean | `praxteward humanize`, `praxteward humanize scan`, `length=N`, `voice=<sample>`, `genre=<genre>` | [korean](references/korean.md) |
+
+Design principles for anything perceived or operated, visual rules for priority, boundaries, overlays, color, and finish, and taste set by constraint rather than default: [design](references/design.md), with `scripts/contrast.py` for measured color checks.
 
 ## 6. Practice
 
 A practice card describes a way of working: the problem's cause, when it applies and when not, decision factors, procedure, verification, assumptions with checks, review triggers, the strongest simpler alternative, and a domain-neutral transfer line. Cards are of kind method, craft, check, or automation; adding cards is how the skill extends to new domains without changing this file. Cards never bind a technology choice; they make the reasoning behind a choice repeatable.
 
-- Learn from signals, not scans. At delivery, add one episode line only when a signal fired: rework, an operator correction, a failure, a surprise, a misfit card, or an uncarded task type reaching its third occurrence in the index tally.
+- Learn from signals, not scans. At delivery, add one episode line only when a signal fired: rework, an operator correction, a failure, a surprise, a misfit card, a check that misled (`signal=check`), or an uncarded task type reaching its third occurrence in the index tally.
 - Consult by index. In Plan, read the project and general indexes and at most two cards in total; a project card overrides a general card of the same task type. Following a card is never the success criterion; the task outcome is.
 - Close the loop. After writing an episode, run Distill when three or more episodes wait or the oldest waits fourteen days (propose it instead under A0). Reconcile also runs Distill and Evolve.
 
@@ -111,9 +123,11 @@ records: <updated paths | proposed deltas | none>
 next: <next safe action>
 ```
 
+Use this block for delegates; human replies may convey the same facts concisely without field labels.
+
 ## 9. Invocation and fallbacks
 
-- Once loaded, the skill stays in context for the session. `praxteward <mode>` runs a mode; `praxteward inspect [path]` runs the record, practice, and output checks and reports without editing.
+- Once loaded, the skill stays in context for the session. `praxteward <mode>` runs a mode; toolkit commands are listed under Craft; `praxteward inspect [path]` runs the record, practice, and output checks and reports without editing.
 - Host events: session start → Orient (light); pre-compaction, pause, handoff → Checkpoint; resume → Recover; test failure → Execute; repeated failure or milestone → Reconcile; release → Reconcile, then Compile; operator away → Intake, then Advance; practice review due → Evolve.
 - When this skill should have run and did not, or ran without adding value, note it under the log's Routing notes; repeated notes justify changing the description or hooks.
 - Scripts need Python 3 and its standard library only; nothing to install. Run them as shown; do not read their source to repeat the checks by hand.
@@ -121,4 +135,4 @@ next: <next safe action>
 
 ## 10. Output
 
-Lead with the result. Report only evidence, changed intent, residual uncertainty, and next action that matter. Distinguish done from proposed. Before delivering a file or a non-fast-path deliverable, pass the [output checks](references/output.md) and run `python3 <skill-dir>/scripts/tell_scan.py <changed files>`.
+Lead with the result. Report only evidence, changed intent, residual uncertainty, and next action that matter. Distinguish done from proposed. When revising someone's text, keep its meaning and claim strength fixed and measure the change against the original. Before delivering a file or a non-fast-path deliverable, run the [output checks](references/output.md) and `python3 <skill-dir>/scripts/tell_scan.py <changed files>`: fix every gate failure, and judge scan signals against the deliverable's genre and convention instead of obeying them. No human review is assumed; hand the operator only what only they can decide or confirm.

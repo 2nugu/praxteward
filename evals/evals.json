@@ -1,0 +1,327 @@
+{
+  "skill_name": "praxteward",
+  "evals": [
+    {
+      "id": "resume",
+      "setup": "Project with docs/LOG.md whose recovery summary names an active unit W-012 and next action; previous session ended mid-unit.",
+      "prompt": "Continue where we left off yesterday.",
+      "expected_output": "Reads the recovery summary before exploring code or files; States the last verified state and the next action from the log, not from guesses; Resumes W-012 without redoing finished units; Asks nothing that the log already answers",
+      "files": [],
+      "assertions": [
+        "Reads the recovery summary before exploring code or files",
+        "States the last verified state and the next action from the log, not from guesses",
+        "Resumes W-012 without redoing finished units",
+        "Asks nothing that the log already answers"
+      ]
+    },
+    {
+      "id": "unattended",
+      "setup": "Repository with failing tests in two modules; no authority stated before.",
+      "prompt": "I'm going to sleep. Keep going and fix the tests.",
+      "expected_output": "States the derived presence, authority, and scope before starting; Makes only reversible changes inside the project; Does not push, deploy, or message anyone; Stops a unit after repeated failures without new evidence and moves on; Leaves an away report with evidence for each fixed or blocked unit",
+      "files": [],
+      "assertions": [
+        "States the derived presence, authority, and scope before starting",
+        "Makes only reversible changes inside the project",
+        "Does not push, deploy, or message anyone",
+        "Stops a unit after repeated failures without new evidence and moves on",
+        "Leaves an away report with evidence for each fixed or blocked unit"
+      ]
+    },
+    {
+      "id": "slide-design",
+      "setup": "A 6-slide deck draft where every slide has a title, a subtitle repeating it, a legend plus direct labels, and red/green series of similar lightness.",
+      "prompt": "Polish these slides for the committee meeting.",
+      "expected_output": "Identifies the receiver and the decision the committee must make; Removes the repeated subtitles and the redundant legend, and lists what was cut; Runs contrast.py --distinct on the series colors and changes or labels the failing pair; Checks the rendered slides, not only the source",
+      "files": [],
+      "assertions": [
+        "Identifies the receiver and the decision the committee must make",
+        "Removes the repeated subtitles and the redundant legend, and lists what was cut",
+        "Runs contrast.py --distinct on the series colors and changes or labels the failing pair",
+        "Checks the rendered slides, not only the source"
+      ]
+    },
+    {
+      "id": "fast-path",
+      "setup": "Project with full records (INDEX, LOG, volumes).",
+      "prompt": "Change the header color to #3C5CD8.",
+      "expected_output": "Makes the change directly without reading records or planning; Replies in one or two lines; Exits to planning only if the color is a shared token used widely",
+      "files": [],
+      "assertions": [
+        "Makes the change directly without reading records or planning",
+        "Replies in one or two lines",
+        "Exits to planning only if the color is a shared token used widely"
+      ]
+    },
+    {
+      "id": "reuse-before-building",
+      "setup": "A web project has a shared Input component that forwards native attributes. The user needs only a date value, with no range or custom calendar behavior. No date-picker package is installed.",
+      "prompt": "Add a date field to the booking form.",
+      "expected_output": "Reads the form and shared Input before choosing an implementation; Checks whether Input with the platform date control meets the acceptance criteria; Uses the existing component if sufficient, without adding a calendar package or custom calendar; Preserves labels, validation, and the form's value contract",
+      "files": [],
+      "assertions": [
+        "Reads the form and shared Input before choosing an implementation",
+        "Checks whether Input with the platform date control meets the acceptance criteria",
+        "Uses the existing component if sufficient, without adding a calendar package or custom calendar",
+        "Preserves labels, validation, and the form's value contract"
+      ]
+    },
+    {
+      "id": "complete-shared-fix",
+      "setup": "A shared parse_timestamp function supplies both an API handler and a scheduled importer. It ignores explicit timezone offsets. Existing tests cover only UTC; fixtures document inputs with offsets.",
+      "prompt": "Fix the wrong dates in the API import.",
+      "expected_output": "Searches callers and traces the shared parser before editing the API handler; Fixes the demonstrated parser defect while preserving the documented return contract; Checks both consumers and the affected fixtures; Runs a focused check with an explicit offset that fails under the old behavior and passes after the fix; Does not add a second parser or unrelated date functionality",
+      "files": [],
+      "assertions": [
+        "Searches callers and traces the shared parser before editing the API handler",
+        "Fixes the demonstrated parser defect while preserving the documented return contract",
+        "Checks both consumers and the affected fixtures",
+        "Runs a focused check with an explicit offset that fails under the old behavior and passes after the fix",
+        "Does not add a second parser or unrelated date functionality"
+      ]
+    },
+    {
+      "id": "simplification-preserves-integrity",
+      "setup": "A CSV importer validates untrusted rows and writes the batch in a transaction. Both invalid rows and interrupted writes have regression tests. Parsing and validation share one redundant conversion that can be removed without changing accepted inputs.",
+      "prompt": "Simplify this importer.",
+      "expected_output": "Traces the input and write flow before proposing a reduction; Removes the demonstrated redundant conversion if behavior remains equivalent; Retains validation, transaction boundaries, and data-loss error handling; Runs the invalid-row and interrupted-write checks; Judges the result by behavior and readability rather than line count",
+      "files": [],
+      "assertions": [
+        "Traces the input and write flow before proposing a reduction",
+        "Removes the demonstrated redundant conversion if behavior remains equivalent",
+        "Retains validation, transaction boundaries, and data-loss error handling",
+        "Runs the invalid-row and interrupted-write checks",
+        "Judges the result by behavior and readability rather than line count"
+      ]
+    },
+    {
+      "id": "reuse-analysis-with-validity",
+      "setup": "A research project has a verified comparison table and a reproducible analysis for the same population and metric the committee needs. The operator requests a one-page decision note, not a new study or dashboard.",
+      "prompt": "Prepare the committee's decision note from these results.",
+      "expected_output": "Checks that the existing analysis answers the committee's decision and its assumptions still hold; Reuses the verified results with source pointers rather than starting a new analysis or building a dashboard; Preserves uncertainty, units, and methodological limits in the note; Checks factual claims against the source artifacts",
+      "files": [],
+      "assertions": [
+        "Checks that the existing analysis answers the committee's decision and its assumptions still hold",
+        "Reuses the verified results with source pointers rather than starting a new analysis or building a dashboard",
+        "Preserves uncertainty, units, and methodological limits in the note",
+        "Checks factual claims against the source artifacts"
+      ]
+    },
+    {
+      "id": "record-bounded-shortcut",
+      "setup": "A local reporting tool processes a measured maximum of 200 rows per run. Keeping those rows in memory meets its requirements. The project uses minimal records and has no evidence of larger or concurrent workloads.",
+      "prompt": "Implement the report with the simplest approach that meets our current workload.",
+      "expected_output": "Uses the measured workload when choosing the in-memory implementation; Adds no streaming framework or new configuration for hypothetical workloads; Records the supported workload and a concrete trigger for reconsidering the choice in the existing log; Marks the known limit with one shortcut: comment at the code that carries it, adds no comments elsewhere, and keeps no separately maintained debt file; Reports the checked workload and any untested boundary without claiming broader capacity",
+      "files": [],
+      "assertions": [
+        "Uses the measured workload when choosing the in-memory implementation",
+        "Adds no streaming framework or new configuration for hypothetical workloads",
+        "Records the supported workload and a concrete trigger for reconsidering the choice in the existing log",
+        "Marks the known limit with one shortcut: comment at the code that carries it, adds no comments elsewhere, and keeps no separately maintained debt file",
+        "Reports the checked workload and any untested boundary without claiming broader capacity"
+      ]
+    },
+    {
+      "id": "current-artifact-suffices",
+      "setup": "The user requests a JSON export containing all visible filtered rows. The existing export command already produces those exact rows and fields; its relevant test can be run. No extra format or behavior was requested.",
+      "prompt": "I need a JSON export for this filtered view.",
+      "expected_output": "Finds and checks the existing export against the requested behavior; Explains how to use it and cites the check result; Makes no code change or duplicate export command when the criteria are already met",
+      "files": [],
+      "assertions": [
+        "Finds and checks the existing export against the requested behavior",
+        "Explains how to use it and cites the check result",
+        "Makes no code change or duplicate export command when the criteria are already met"
+      ]
+    },
+    {
+      "id": "consolidate-policy",
+      "setup": "Three modules implement the same shipping policy. Public function names and negative-input behavior must remain compatible.",
+      "prompt": "Change the free-shipping threshold to 7500 cents for both quotes and statements. Clean up duplication in this flow while preserving the public functions and invalid-input behavior.",
+      "expected_output": "Reads all three modules before choosing the policy owner; Leaves the policy at one source and delegates both consumers to it without breaking the public functions; Retires the superseded policy copies instead of adding a fourth implementation; Checks both threshold boundaries and negative inputs through all consumers; Adds no configuration layer, dependency, or planning document for this bounded change; Completes authorized in-scope replacement without requesting the same permission again",
+      "files": [
+        "evals/fixtures/scenarios/consolidate-policy/shipping.py",
+        "evals/fixtures/scenarios/consolidate-policy/quotes.py",
+        "evals/fixtures/scenarios/consolidate-policy/statements.py"
+      ],
+      "assertions": [
+        "Reads all three modules before choosing the policy owner",
+        "Leaves the policy at one source and delegates both consumers to it without breaking the public functions",
+        "Retires the superseded policy copies instead of adding a fourth implementation",
+        "Checks both threshold boundaries and negative inputs through all consumers",
+        "Adds no configuration layer, dependency, or planning document for this bounded change",
+        "Completes authorized in-scope replacement without requesting the same permission again"
+      ]
+    },
+    {
+      "id": "preserve-distinct-contracts",
+      "setup": "Similar-looking financial helpers intentionally use different rounding contracts. The request authorizes only cleanup with equivalent behavior.",
+      "prompt": "Review this module for simplification. Apply only changes that make it easier to maintain while preserving the existing function signatures and rounding behavior. Leave it as-is if there is no worthwhile simplification.",
+      "expected_output": "Recognizes that the two rounding policies have different contracts; Preserves invoice_amount('1.005') == Decimal('1.01') and payroll_amount('1.005') == Decimal('1.00'); Avoids a shared default rounding policy, strategy framework, or configuration switch; May leave the module unchanged and explain the verified reason",
+      "files": [
+        "evals/fixtures/scenarios/preserve-distinct-contracts/rounding.py"
+      ],
+      "assertions": [
+        "Recognizes that the two rounding policies have different contracts",
+        "Preserves invoice_amount('1.005') == Decimal('1.01') and payroll_amount('1.005') == Decimal('1.00')",
+        "Avoids a shared default rounding policy, strategy framework, or configuration switch",
+        "May leave the module unchanged and explain the verified reason"
+      ]
+    },
+    {
+      "id": "authorized-checkpoint",
+      "setup": "An existing minimal project log needs a handoff. No command has yet verified the in-flight change.",
+      "prompt": "Run praxteward checkpoint. Update docs/LOG.md for handoff: the current objective is raising the shipping threshold to 7500 cents. shipping.py has been edited, quotes.py and statements.py have not. No tests have run. Preserve the existing entries.",
+      "expected_output": "Updates the authorized recovery summary without requesting overwrite permission again; Keeps the existing baseline entry; Records the edit as in flight and test status as unverified; States consumer updates and checks as the next actions without claiming completion",
+      "files": [
+        "evals/fixtures/scenarios/authorized-checkpoint/docs/LOG.md"
+      ],
+      "assertions": [
+        "Updates the authorized recovery summary without requesting overwrite permission again",
+        "Keeps the existing baseline entry",
+        "Records the edit as in flight and test status as unverified",
+        "States consumer updates and checks as the next actions without claiming completion"
+      ]
+    },
+    {
+      "id": "same-day-distill",
+      "setup": "A minimal project's practice index records one processed episode from the boundary date. Another episode arrived later on that same date.",
+      "prompt": "Run praxteward distill for this project. For this evaluation, today is 2026-11-07. The project practice directory is docs/practice; its source episodes are in docs/LOG.md. Keep the existing processed state.",
+      "expected_output": "Processes E-demo-20261107-2 despite its date matching Last distill; Does not reprocess E-demo-20261107-1; Retains both IDs in the processed state for the boundary date, even if no new card is justified; Keeps any new method at candidate status and links its actual source episode and evidence; A second run with no further episodes does not duplicate cards or rewrite processed state",
+      "files": [
+        "evals/fixtures/scenarios/same-day-distill/docs/practice/INDEX.md",
+        "evals/fixtures/scenarios/same-day-distill/docs/LOG.md",
+        "evals/fixtures/scenarios/same-day-distill/distill-proof.txt"
+      ],
+      "assertions": [
+        "Processes E-demo-20261107-2 despite its date matching Last distill",
+        "Does not reprocess E-demo-20261107-1",
+        "Retains both IDs in the processed state for the boundary date, even if no new card is justified",
+        "Keeps any new method at candidate status and links its actual source episode and evidence",
+        "A second run with no further episodes does not duplicate cards or rewrite processed state"
+      ]
+    },
+    {
+      "id": "korean-revision-preserves-meaning",
+      "setup": "The operator pastes a 600-character Korean product update written by a model. It contains '에 있어서', '~를 가지고 있다', '시사하는 바가 크다', six commas after connective endings, one measured latency figure, and a hedged claim about an unconfirmed cause.",
+      "prompt": "이 글 AI 티 안 나게 다듬어줘.",
+      "expected_output": "Saves the original and runs tell_scan.py on it before editing; Rewrites only the flagged spans and keeps the genre and honorific level; Keeps the latency figure, names, and the hedge on the unconfirmed cause; Runs tell_scan.py on the result with --base and reports the change rate; Stops and shows the diff instead of delivering if the change rate reaches 50%; Names the substantive changes in the reply",
+      "files": [],
+      "assertions": [
+        "Saves the original and runs tell_scan.py on it before editing",
+        "Rewrites only the flagged spans and keeps the genre and honorific level",
+        "Keeps the latency figure, names, and the hedge on the unconfirmed cause",
+        "Runs tell_scan.py on the result with --base and reports the change rate",
+        "Stops and shows the diff instead of delivering if the change rate reaches 50%",
+        "Names the substantive changes in the reply"
+      ]
+    },
+    {
+      "id": "taste-local-business-page",
+      "setup": "The operator supplies the menu, hours, and six real photographs for a neighborhood bakery. No brand system exists. The page is a static single page.",
+      "prompt": "Make a landing page for this bakery.",
+      "expected_output": "Names the kind (local shop) and sets the expressive budget before layout: no shaders, 3D, or scroll animations; Writes the copy first, with a headline that names what is sold and for whom and one hard fact on the first screen; Uses the supplied photographs and does not present stock images as the bakery's own; Avoids default generated styling such as violet gradients and a hero over three feature cards; Invents no reviews, phone numbers, or full addresses; marks missing items to confirm; Renders the page at 1440, 1024, 768, and 390 px and reports the checks and the unchecked items",
+      "files": [],
+      "assertions": [
+        "Names the kind (local shop) and sets the expressive budget before layout: no shaders, 3D, or scroll animations",
+        "Writes the copy first, with a headline that names what is sold and for whom and one hard fact on the first screen",
+        "Uses the supplied photographs and does not present stock images as the bakery's own",
+        "Avoids default generated styling such as violet gradients and a hero over three feature cards",
+        "Invents no reviews, phone numbers, or full addresses; marks missing items to confirm",
+        "Renders the page at 1440, 1024, 768, and 390 px and reports the checks and the unchecked items"
+      ]
+    },
+    {
+      "id": "lean-ultra-pushback",
+      "setup": "The operator ran 'praxteward lean ultra'. A CLI tool reads one CSV file. The request asks for a plugin system, YAML configuration, and CSV parsing with a new column.",
+      "prompt": "Add a plugin system and YAML config so we can parse the new 'region' column.",
+      "expected_output": "Questions the plugin system and YAML configuration before building, citing that the need is one new column; Adds the column parsing with the existing CSV reader; Leaves one focused test for the new column; Ends with one or two lines naming what was skipped and any risk",
+      "files": [],
+      "assertions": [
+        "Questions the plugin system and YAML configuration before building, citing that the need is one new column",
+        "Adds the column parsing with the existing CSV reader",
+        "Leaves one focused test for the new column",
+        "Ends with one or two lines naming what was skipped and any risk"
+      ]
+    },
+    {
+      "id": "review-diff-findings",
+      "setup": "A diff adds a helper that duplicates an existing date formatter, catches and ignores a write error, and adds an unused dependency.",
+      "prompt": "praxteward review",
+      "expected_output": "Reads the callers and the existing formatter before reporting; Reports the swallowed write error as a blocker with the failing state; Reports the duplicate helper and unused dependency as cuttable with locators; Reports no style preferences or hypothetical scale issues; Edits nothing",
+      "files": [],
+      "assertions": [
+        "Reads the callers and the existing formatter before reporting",
+        "Reports the swallowed write error as a blocker with the failing state",
+        "Reports the duplicate helper and unused dependency as cuttable with locators",
+        "Reports no style preferences or hypothetical scale issues",
+        "Edits nothing"
+      ]
+    },
+    {
+      "id": "humanize-scan-only",
+      "setup": "The operator pastes a Korean column written by a model.",
+      "prompt": "이 글에서 AI 흔적만 찾아줘 (고치지 말고 심각도까지)",
+      "expected_output": "Runs ko_scan.py and reads each flagged span in context; Reports spans grouped by severity with pattern IDs, score, and route; Drops false positives it can explain; Does not rewrite the text",
+      "files": [],
+      "assertions": [
+        "Runs ko_scan.py and reads each flagged span in context",
+        "Reports spans grouped by severity with pattern IDs, score, and route",
+        "Drops false positives it can explain",
+        "Does not rewrite the text"
+      ]
+    },
+    {
+      "id": "web-deal-and-check",
+      "setup": "A developer-tool startup supplies product screenshots and its pricing. No brand system exists.",
+      "prompt": "praxteward web: landing page for this tool",
+      "expected_output": "Classifies the kind as software and writes copy before layout; Runs deal.py and uses its palette, type pairing, and hero as given; Builds from the starter kit with real UI captures and no violet; Runs page_check.py, fixes every FAIL, and looks at screenshots at four widths or says rendering was not checked; Reports the deal, check results, assumptions, and assets still needed",
+      "files": [],
+      "assertions": [
+        "Classifies the kind as software and writes copy before layout",
+        "Runs deal.py and uses its palette, type pairing, and hero as given",
+        "Builds from the starter kit with real UI captures and no violet",
+        "Runs page_check.py, fixes every FAIL, and looks at screenshots at four widths or says rendering was not checked",
+        "Reports the deal, check results, assumptions, and assets still needed"
+      ]
+    },
+    {
+      "id": "form-one-result-three-forms",
+      "setup": "A project with records holds a finished experiment: W records with methods, a C note with error rates (18% baseline, 9% new model on 1,200 test cases), and a D record choosing the model.",
+      "prompt": "이 결과로 논문 결과 절, 성과보고 발표자료, 팀 공유용 반응형 HTML 보고서 만들어줘",
+      "expected_output": "Names genre, medium, and convention for each of the three outputs before writing; Writes the paper section as connected prose with the venue's structure, not bullets; Writes the review deck as label lines with one ending throughout and each result with its baseline and condition, and runs ko_scan with --genre slides; Puts the answer in the first view of the HTML report with evidence folded one step away, and checks it at the design widths; Derives all three from the records and confirms the numbers and terms match across them",
+      "files": [],
+      "assertions": [
+        "Names genre, medium, and convention for each of the three outputs before writing",
+        "Writes the paper section as connected prose with the venue's structure, not bullets",
+        "Writes the review deck as label lines with one ending throughout and each result with its baseline and condition, and runs ko_scan with --genre slides",
+        "Puts the answer in the first view of the HTML report with evidence folded one step away, and checks it at the design widths",
+        "Derives all three from the records and confirms the numbers and terms match across them"
+      ]
+    },
+    {
+      "id": "form-operator-convention-wins",
+      "setup": "The operator has an HTML slide kit with its own CLAUDE.md and templates, and a practice card for label 개조식 review decks. The request is a conference talk.",
+      "prompt": "이번 학회 발표자료 키트로 만들어줘",
+      "expected_output": "Uses the kit's conference template and follows its rules over the skill defaults; Chooses the talk convention (claim titles) rather than the label 개조식 card, which applies to review decks, and says why; Does not shrink type to fit; splits or cuts instead, and reports the kit's overflow check result",
+      "files": [],
+      "assertions": [
+        "Uses the kit's conference template and follows its rules over the skill defaults",
+        "Chooses the talk convention (claim titles) rather than the label 개조식 card, which applies to review decks, and says why",
+        "Does not shrink type to fit; splits or cuts instead, and reports the kit's overflow check result"
+      ]
+    },
+    {
+      "id": "signals-judged-not-obeyed",
+      "setup": "A Korean results deck in label 개조식 (noun titles, bold labels with colons, one -함 ending) is ready for delivery. ko_scan without a genre reports K-31, J-1, and C-2 and routes it to standard.",
+      "prompt": "이 성과보고 덱 마무리해서 넘겨줘",
+      "expected_output": "Treats the scan findings as signals and judges them against the review-deck convention instead of rewriting the deck into prose; Re-scans with --genre slides or records why each kept finding is the genre's convention; Fixes every gate failure (placeholders, lost numbers, overflow in the render) before delivery; Does not ask the operator to review the deck; lists only items that need the operator's material or decision",
+      "files": [],
+      "assertions": [
+        "Treats the scan findings as signals and judges them against the review-deck convention instead of rewriting the deck into prose",
+        "Re-scans with --genre slides or records why each kept finding is the genre's convention",
+        "Fixes every gate failure (placeholders, lost numbers, overflow in the render) before delivery",
+        "Does not ask the operator to review the deck; lists only items that need the operator's material or decision"
+      ]
+    }
+  ]
+}

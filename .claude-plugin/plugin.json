@@ -1,8 +1,8 @@
 {
   "name": "praxteward",
   "displayName": "Praxteward",
-  "version": "3.1.1",
-  "description": "Plans, divides, deepens, and verifies substantial work of any kind; runs it autonomously within a stated authority; keeps it recoverable across sessions; and learns which ways of working to reuse, revise, retire, or automate.",
+  "version": "3.2.0",
+  "description": "Plans, divides, deepens, and verifies substantial work of any kind; runs it autonomously within a stated authority; keeps it recoverable across sessions; and learns which ways of working to reuse, revise, retire, or automate. Includes lean-code review and audit, a constrained website kit, and Korean de-machining with meaning gates.",
   "author": {
     "name": "2nugu",
     "url": "https://github.com/2nugu"
@@ -15,6 +15,9 @@
     "project-continuity",
     "autonomy",
     "workflow-learning",
-    "agent-skills"
+    "agent-skills",
+    "lean-code",
+    "web-design",
+    "korean-writing"
   ]
 }

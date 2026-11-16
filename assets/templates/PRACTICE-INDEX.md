@@ -5,6 +5,7 @@
 | P-001 | <title> | candidate | method | general | <task type> | <cause> → <mechanism> | YYYY-MM-DD |
 
 Last distill: YYYY-MM-DD
+Processed on last distill date: none
 
 ## Task types
 

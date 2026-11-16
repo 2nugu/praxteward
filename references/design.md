@@ -1,8 +1,8 @@
 # Design
 
-Contents: Principles (perception, use, effort and access) · 1 Priority · 2 Reduction · 3 Grouping and boundaries · 4 Layers and overlays · 5 Color · 6 Type and spacing · 7 Finish · Design review
+Contents: Principles (perception, use, effort and access) · 1 Priority · 2 Reduction · 3 Grouping and boundaries · 4 Layers and overlays · 5 Color · 6 Type and spacing · 7 Finish · 8 Taste by constraint · Design review
 
-The principles below apply to anything a person perceives or operates: documents, slides, pages, interfaces, figures, forms, command-line tools, and APIs. Sections 1 to 7 turn them into rules for visual deliverables (slides, pages, interfaces, figures, diagrams, formatted documents). Execute ranks each view (section 1) before laying it out and applies sections 2 to 6; Integrate checks section 7 and runs the design review on the rendered output. Existing brand or design-system rules take precedence; apply these inside them.
+The principles below apply to anything a person perceives or operates: documents, slides, pages, interfaces, figures, forms, command-line tools, and APIs. Sections 1 to 7 turn them into rules for visual deliverables (slides, pages, interfaces, figures, diagrams, formatted documents). Execute ranks each view (section 1) before laying it out and applies sections 2 to 6; Plan settles section 8 before layout; Integrate checks section 7 and runs the design review on the rendered output. Existing brand or design-system rules take precedence; apply these inside them.
 
 ## Principles
 
@@ -97,6 +97,19 @@ Check in the real medium at real size: export the PDF, render the slides, screen
 - Text: no single orphaned word on a title or button; truncated text has a way to see the rest; nothing overflows at the narrowest supported width.
 - Images and figures: sharp at display size, cropped on purpose, axes and units present, nothing clipped by the export.
 
+## 8. Taste by constraint
+
+Taste that is left to free choice drifts to the same defaults every time. Constrain the choices before making them.
+
+- Name the kind first: what the subject is (developer tool, research result, local shop, internal report) and who receives it. The kind sets the expressive budget. Shaders, 3D, scroll scenes, and ambient motion suit only technical, gaming, or product subjects that are shown that way. A cafe, a clinic, or a lab report gets real photographs, type, and flat color.
+- Write the content before the layout: the headline names what it is and for whom, the first view carries one hard fact, and each action pairs a verb with an object. Then plan view by view, one idea per screen or slide, before building any of it.
+- Choose from a set rather than inventing one: the brand or design system, the project's earlier deliverables, or a short list of palette and type pairings. Record which was used. When nothing exists, avoid the defaults that mark generated work: violet-to-blue gradients, glass cards, a hero over three feature cards, centered everything, and fade-in on scroll.
+- Motion answers the receiver's action: hover, press, or a state change. Nothing animates just because it scrolled into view. A loop longer than five seconds has a pause control, and reduced-motion settings stop motion without hiding content.
+- Real material only. A stock photo is never presented as the client's own product, people, or place. No drawn imitation of a real logo, and no invented reviews, customers, figures, addresses, or phone numbers. Use `.example` contacts and label stand-ins `to confirm`.
+- Do not change a shared kit, template, or check to make a deliverable pass. Report the conflict instead.
+- For a website or landing page, use the full kit and house rules in [web](web.md).
+- Report the kind, the constrained choices, the checks run and their results, what went unchecked, every assumed price, date, or address, and the assets the receiver must still supply.
+
 ## Design review (Integrate G5, Compile P7)
 
 Run after the generic-feel review in [craft](craft.md), on the rendered output.
@@ -105,5 +118,6 @@ Run after the generic-feel review in [craft](craft.md), on the rendered output.
 2. Removal pass is done: each remaining element has a named loss if removed; list what was cut in the unit's record or report.
 3. No meaning carries redundant cues; no same-kind containers are nested.
 4. `contrast.py` passes for every text and UI pair in every mode; `--distinct` passes for categorical colors, or the colors are paired with labels.
-5. The finish checks in section 7 pass.
-6. A fix that recurs across tasks becomes an episode with `signal=repeat`, the start of a craft card for that artifact type.
+5. The finish checks in section 7 pass, with pages rendered at 1440, 1024, 768, and 390 px wide.
+6. The expressive budget matches the kind in section 8, and no fabricated material remains.
+7. A fix that recurs across tasks becomes an episode with `signal=repeat`, the start of a craft card for that artifact type.

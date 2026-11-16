@@ -1,0 +1,17 @@
+{
+  "roles": "bg page ground; surface cards and panels; text body; muted secondary text; accent primary action and key series; on_accent text on accent; line borders",
+  "palettes": [
+    {"id": "paper-ink", "mode": "light", "kinds": ["service", "place", "product"], "bg": "#F7F5F0", "surface": "#FFFFFF", "text": "#1C1B19", "muted": "#5C5850", "accent": "#1F4E3D", "on_accent": "#FFFFFF", "line": "#E2DED5"},
+    {"id": "harbor", "mode": "light", "kinds": ["software", "service", "tech"], "bg": "#F4F7F9", "surface": "#FFFFFF", "text": "#0F1B26", "muted": "#4A5866", "accent": "#0B5FA5", "on_accent": "#FFFFFF", "line": "#DCE3EA"},
+    {"id": "graphite", "mode": "dark", "kinds": ["software", "tech", "gaming"], "bg": "#0E1013", "surface": "#171A1F", "text": "#ECEEF1", "muted": "#A2A9B3", "accent": "#3DD68C", "on_accent": "#06210F", "line": "#262B33"},
+    {"id": "ember", "mode": "dark", "kinds": ["gaming", "tech"], "bg": "#120E0C", "surface": "#1D1714", "text": "#F4EDE8", "muted": "#B9ABA1", "accent": "#FF7A3D", "on_accent": "#1A0A02", "line": "#2E2521"},
+    {"id": "terracotta", "mode": "light", "kinds": ["place", "product", "service"], "bg": "#FBF6F1", "surface": "#FFFFFF", "text": "#2A1D17", "muted": "#6B5A50", "accent": "#A84B24", "on_accent": "#FFFFFF", "line": "#EADFD5"},
+    {"id": "sage", "mode": "light", "kinds": ["place", "service"], "bg": "#F3F5F0", "surface": "#FFFFFF", "text": "#1E2420", "muted": "#56605A", "accent": "#3E6B4F", "on_accent": "#FFFFFF", "line": "#DDE3DB"},
+    {"id": "citrus", "mode": "light", "kinds": ["product", "place"], "bg": "#FFFDF5", "surface": "#FFFFFF", "text": "#1D1C16", "muted": "#5E5B4C", "accent": "#A94400", "on_accent": "#FFFFFF", "line": "#ECE7D6"},
+    {"id": "deep-teal", "mode": "dark", "kinds": ["tech", "software"], "bg": "#0A1416", "surface": "#10201F", "text": "#E6F2F1", "muted": "#9DB5B3", "accent": "#2EC4B6", "on_accent": "#032623", "line": "#1E3332"},
+    {"id": "mono", "mode": "light", "kinds": ["product", "software", "service"], "bg": "#FFFFFF", "surface": "#F5F5F5", "text": "#111111", "muted": "#555555", "accent": "#111111", "on_accent": "#FFFFFF", "line": "#E5E5E5"},
+    {"id": "signal", "mode": "light", "kinds": ["product", "gaming"], "bg": "#FAFAF8", "surface": "#FFFFFF", "text": "#161616", "muted": "#575757", "accent": "#C8102E", "on_accent": "#FFFFFF", "line": "#E4E4E0"},
+    {"id": "night-gold", "mode": "dark", "kinds": ["gaming", "tech"], "bg": "#07111F", "surface": "#0E1C30", "text": "#EAF2FF", "muted": "#9FB3CC", "accent": "#FFC53D", "on_accent": "#241A00", "line": "#1B2B44"},
+    {"id": "clay-blue", "mode": "light", "kinds": ["service", "software", "place"], "bg": "#F6F4EF", "surface": "#FFFFFF", "text": "#1A1F2B", "muted": "#535B6B", "accent": "#2F4B8A", "on_accent": "#FFFFFF", "line": "#E1DDD3"}
+  ]
+}

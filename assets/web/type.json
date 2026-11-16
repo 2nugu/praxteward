@@ -1,0 +1,25 @@
+{
+  "note": "Google Fonts families. display sets headings, body sets text. ko pairings cover Hangul.",
+  "pairings": [
+    {"id": "inter-tight", "kinds": ["software", "tech"], "display": "Inter Tight", "body": "Inter", "weights": "500;700", "fallback": "system-ui, sans-serif"},
+    {"id": "space-plex", "kinds": ["tech", "software"], "display": "Space Grotesk", "body": "IBM Plex Sans", "weights": "500;700", "fallback": "system-ui, sans-serif"},
+    {"id": "fraunces-source", "kinds": ["place", "product"], "display": "Fraunces", "body": "Source Sans 3", "weights": "400;600", "fallback": "Georgia, serif"},
+    {"id": "dm-serif", "kinds": ["service", "place"], "display": "DM Serif Display", "body": "DM Sans", "weights": "400;600", "fallback": "Georgia, serif"},
+    {"id": "manrope", "kinds": ["software", "product", "service"], "display": "Manrope", "body": "Manrope", "weights": "500;800", "fallback": "system-ui, sans-serif"},
+    {"id": "archivo", "kinds": ["product", "gaming"], "display": "Archivo", "body": "Archivo", "weights": "500;800", "fallback": "system-ui, sans-serif"},
+    {"id": "sora-inter", "kinds": ["tech", "gaming"], "display": "Sora", "body": "Inter", "weights": "500;700", "fallback": "system-ui, sans-serif"},
+    {"id": "newsreader", "kinds": ["service", "place"], "display": "Newsreader", "body": "Public Sans", "weights": "400;600", "fallback": "Georgia, serif"},
+    {"id": "bricolage", "kinds": ["product", "place"], "display": "Bricolage Grotesque", "body": "Public Sans", "weights": "500;700", "fallback": "system-ui, sans-serif"},
+    {"id": "oxanium", "kinds": ["gaming"], "display": "Oxanium", "body": "Inter", "weights": "500;700", "fallback": "system-ui, sans-serif"},
+    {"id": "noto-kr", "kinds": ["software", "tech", "product", "service", "place", "gaming"], "lang": "ko", "display": "Noto Sans KR", "body": "Noto Sans KR", "weights": "400;700", "fallback": "'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif"},
+    {"id": "plex-kr", "kinds": ["software", "tech", "service"], "lang": "ko", "display": "IBM Plex Sans KR", "body": "IBM Plex Sans KR", "weights": "400;600", "fallback": "'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif"},
+    {"id": "serif-kr", "kinds": ["place", "service", "product"], "lang": "ko", "display": "Noto Serif KR", "body": "Noto Sans KR", "weights": "400;700", "fallback": "'Apple SD Gothic Neo', 'Malgun Gothic', serif"}
+  ],
+  "heroes": [
+    {"id": "split", "kinds": ["software", "tech", "product", "service"], "note": "text left, visual right; visual is product UI or a real photo"},
+    {"id": "full-bleed", "kinds": ["place", "service", "product", "gaming"], "note": "one real photo or key art behind a scrim; text bottom-left"},
+    {"id": "stacked", "kinds": ["software", "tech", "product"], "note": "left-aligned headline, then a wide product visual below"},
+    {"id": "editorial", "kinds": ["place", "service", "product"], "note": "large type over two thirds, a tall photo offset in the last third"},
+    {"id": "stage", "kinds": ["gaming", "tech"], "note": "dark ground, centered key visual or live scene with a static fallback, headline above"}
+  ]
+}

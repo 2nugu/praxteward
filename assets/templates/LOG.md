@@ -15,7 +15,7 @@
 - Change / decision:
 - Evidence: <tests run, results, references>
 - Open:
-- Episode E-<project>-<YYYYMMDD>-<n>: type=<task type>; card=<P-NNN@version|none>; outcome=<met|partial|missed>; rework=<n>; corrections=<n>; signal=<rework|correction|failure|surprise|repeat|misfit>; note=<one line>   (only when a signal fired)
+- Episode E-<project>-<YYYYMMDD>-<n>: type=<task type>; card=<P-NNN@version|none>; outcome=<met|partial|missed>; rework=<n>; corrections=<n>; signal=<rework|correction|failure|surprise|repeat|misfit|check>; note=<one line>   (only when a signal fired)
 
 ## Checklist  (only when the host has no task tool; procedure step IDs, `n/a: <reason>` allowed)
 

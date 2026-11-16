@@ -1,16 +1,20 @@
 #!/usr/bin/env python3
 """Consistency check for the praxteward skill package. Standard library only.
 
-Checks frontmatter rules; that packaged Markdown links and file mentions
-resolve inside the package; that contract.json agrees with SKILL.md, the
-mode procedures, the VOLUME template, check_records.py, and output.md; and
-that packaged prose and scripts pass tell_scan.py.
+Checks frontmatter against the Agent Skills specification; that packaged
+Markdown links and file mentions resolve inside the package; that the mode
+tables in SKILL.md, the mode procedures, the templates, and the checkers'
+required fields agree; that the plugin manifests parse and name the skill;
+and that packaged prose and scripts pass tell_scan.py.
 Usage: python3 tools/validate.py [skill_dir]   (exit 1 on any failure)
 """
-import ast, json, os, re, subprocess, sys
+import ast, hashlib, json, os, re, subprocess, sys
 
 EXCLUDE_DIRS = {"docs", "evals", "tools", "dist", "__pycache__", "venv", "node_modules"}
 EXCLUDE_FILES = {"README.md", "CHANGELOG.md", "Thumbs.db", "desktop.ini"}
+# agentskills.io/specification: name and description are required, the rest optional
+FRONTMATTER_KEYS = {"name", "description", "license", "compatibility", "metadata", "allowed-tools"}
+REPORT_FIELDS = ["mode", "role", "status", "objective", "evidence", "state_delta", "unknowns", "records", "next"]
 
 
 def packaged_files(root):
@@ -54,12 +58,17 @@ def validate(root):
     skill = read("SKILL.md")
     fm, body = frontmatter(skill)
     name, desc = fm.get("name", ""), fm.get("description", "")
-    if not re.fullmatch(r"[a-z0-9-]{1,64}", name) or re.search(r"claude|anthropic", name):
+    if not re.fullmatch(r"[a-z0-9]+(-[a-z0-9]+)*", name) or len(name) > 64 or re.search(r"claude|anthropic", name):
         errors.append(f"invalid name '{name}'")
     if not desc or len(desc) > 1024 or re.search(r"[<>]", desc):
         errors.append(f"invalid description (len={len(desc)}; no angle brackets)")
-    if set(fm) - {"name", "description"}:
-        errors.append(f"unexpected frontmatter keys {sorted(set(fm) - {'name', 'description'})}")
+    if set(fm) - FRONTMATTER_KEYS:
+        errors.append(f"unexpected frontmatter keys {sorted(set(fm) - FRONTMATTER_KEYS)}")
+    if len(fm.get("compatibility", "")) > 500:
+        errors.append("compatibility exceeds 500 characters")
+    lines = skill.count("\n")
+    if lines > 500:
+        errors.append(f"SKILL.md has {lines} lines; the Agent Skills specification recommends under 500")
 
     for rel in files:
         if not rel.endswith((".md", ".json")):
@@ -75,71 +84,70 @@ def validate(root):
             if m not in fileset:
                 errors.append(f"{rel}: mentions missing or unpackaged file {m}")
 
-    contract = json.loads(read("contract.json"))
-    for mode, spec in contract["modes"].items():
-        if spec["procedure"] not in fileset:
-            errors.append(f"{mode}: procedure missing"); continue
-        text = read(spec["procedure"])
-        found = re.findall(r"^- ([A-Z]\d+)\.", text, flags=re.M)
-        if found != spec["steps"]:
-            errors.append(f"{mode}: steps {found} != contract {spec['steps']}")
-        if not text.startswith(f"# {mode.capitalize()}\n"):
-            errors.append(f"{spec['procedure']}: title must be '# {mode.capitalize()}'")
-        for s in spec.get("light_steps", []) + spec.get("lookahead_steps", []):
-            if s not in spec["steps"]:
-                errors.append(f"{mode}: sub-step {s} not in steps")
-        if f"**{mode.capitalize()}**" not in body or spec["procedure"] not in body:
-            errors.append(f"SKILL.md mode table missing {mode} or its procedure link")
-    prefixes = [s[0][0] for s in (m["steps"] for m in contract["modes"].values())]
+    modes = re.findall(r"\*\*(\w+)\*\* \|.*?\]\((modes/\w+\.md)\)", body)
+    linked = {rel for _, rel in modes}
+    for rel in sorted(f for f in fileset if f.startswith("modes/")):
+        if rel not in linked:
+            errors.append(f"{rel}: not linked from a SKILL.md mode table")
+    prefixes = []
+    for mode, rel in modes:
+        if rel not in fileset:
+            errors.append(f"{mode}: procedure {rel} missing"); continue
+        text = read(rel)
+        if not text.startswith(f"# {mode}\n"):
+            errors.append(f"{rel}: title must be '# {mode}'")
+        steps = re.findall(r"^- ([A-Z])(\d+)\.", text, flags=re.M)
+        if not steps or len({s[0] for s in steps}) != 1 or [int(s[1]) for s in steps] != list(range(1, len(steps) + 1)):
+            errors.append(f"{rel}: steps must share one letter and count from 1")
+        prefixes += [s[0] for s in steps[:1]]
     if len(prefixes) != len(set(prefixes)):
         errors.append(f"step ID prefixes collide: {prefixes}")
 
     block = re.search(r"## \d+\. Report.*?```(.*?)```", body, flags=re.S)
-    if not block:
-        errors.append("SKILL.md report block not found")
-    else:
-        for field in contract["report"]["required"]:
-            if not re.search(rf"\b{field}:", block.group(1)):
-                errors.append(f"report field '{field}' missing from SKILL.md")
+    for field in REPORT_FIELDS:
+        if not block or not re.search(rf"\b{field}:", block.group(1)):
+            errors.append(f"report field '{field}' missing from SKILL.md report block")
 
-    for ev, target in contract["events"].items():
-        for t in (target if isinstance(target, list) else [target]):
-            base = re.sub(r"_(light|lookahead)$", "", t)
-            if t not in ("named_mode", "regate", "inspect_read_only") and base not in contract["modes"]:
-                errors.append(f"event {ev} maps to unknown mode {t}")
+    for script, const, tmpl in (("scripts/check_records.py", "REQUIRED_W", "assets/templates/VOLUME.md"),
+                                ("scripts/check_records.py", "REQUIRED_D", "assets/templates/VOLUME.md"),
+                                ("scripts/check_practice.py", "REQUIRED_CARD", "assets/templates/CARD.md")):
+        m = re.search(rf"^{const} = (\[.*?\])", read(script), re.S | re.M)
+        if not m:
+            errors.append(f"{script}: {const} not found"); continue
+        text = read(tmpl)
+        for k in ast.literal_eval(m.group(1)):
+            if f"- **{k}:**" not in text:
+                errors.append(f"{tmpl} lacks field {k} required by {script}")
 
-    checker = read(contract["records"]["checker"])
-    tmpl = read("assets/templates/VOLUME.md")
-    for key, const in (("work_required", "REQUIRED_W"), ("decision_required", "REQUIRED_D")):
-        m = re.search(rf"^{const} = (\[.*?\])", checker, re.S | re.M)
-        if not m or ast.literal_eval(m.group(1)) != contract["records"][key]:
-            errors.append(f"contract records.{key} != {const} in checker")
-        for k in contract["records"][key]:
-            if f"- **{k}:**" not in tmpl:
-                errors.append(f"VOLUME template lacks field {k}")
-
-    card = read("assets/templates/CARD.md")
-    m = re.search(r"^REQUIRED_CARD = (\[.*?\])", read(contract["practice"]["checker"]), re.S | re.M)
-    if not m or ast.literal_eval(m.group(1)) != contract["practice"]["card_required"]:
-        errors.append("contract practice.card_required != REQUIRED_CARD in checker")
-    for k in contract["practice"]["card_required"]:
-        if f"- **{k}:**" not in card:
-            errors.append(f"CARD template lacks field {k}")
-
-    oc = contract["output_checks"]
     defined = re.findall(r"^- (T\d+) ", read("references/output.md"), flags=re.M)
-    if defined != oc["block"] + oc["fix"]:
-        errors.append(f"output.md checks {defined} != contract")
+    if defined != sorted(set(defined)):
+        errors.append(f"output.md check IDs must be unique and ascending: {defined}")
     targets = [os.path.join(root, f) for f in files
                if (f.endswith(".md") and not f.startswith("assets/templates/")) or f.endswith(".py")]
-    r = subprocess.run([sys.executable, os.path.join(root, oc["checker"]), *targets],
+    r = subprocess.run([sys.executable, os.path.join(root, "scripts/tell_scan.py"), *targets],
                        capture_output=True, encoding="utf-8", errors="replace")
     if r.returncode not in (0, 1) or r.stderr.strip():
         errors.append("tell_scan failed: " + (r.stdout + r.stderr).strip()[-300:])
     elif r.returncode:
         errors += ["tell: " + l for l in r.stdout.splitlines() if re.match(r"T\d+ ", l)]
 
-    return errors, f"{len(contract['modes'])} modes, {len(files)} packaged files, description {len(desc)} chars, SKILL.md body {len(body.split())} words"
+    if os.path.isdir(os.path.join(root, ".claude-plugin")):
+        try:
+            plugin = json.loads(read(".claude-plugin/plugin.json"))
+            market = json.loads(read(".claude-plugin/marketplace.json"))
+            if plugin.get("name") != name or [p.get("name") for p in market.get("plugins", [])] != [name]:
+                errors.append("plugin.json and marketplace.json must name the skill")
+            if not re.fullmatch(r"\d+\.\d+\.\d+", plugin.get("version", "")):
+                errors.append("plugin.json version must be MAJOR.MINOR.PATCH")
+        except (OSError, ValueError) as e:
+            errors.append(f"plugin manifest unreadable: {e}")
+
+    digest = hashlib.sha256()
+    for rel in files:
+        with open(os.path.join(root, rel), "rb") as source:
+            data = source.read()
+        digest.update(rel.encode("utf-8") + b"\0" + len(data).to_bytes(8, "big") + data)
+    return errors, f"{len(modes)} modes, {len(files)} packaged files, description {len(desc)} chars, SKILL.md {lines} lines and {len(body.split())} body words, package-sha256 {digest.hexdigest()}"
 
 
 if __name__ == "__main__":

@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 # Regression tests for scripts/check_practice.py on a fixture practice directory.
+# Windows: python3 may be the Store stub; fall back to python.
+python3 -c "" >/dev/null 2>&1 || { python3(){ python "$@"; }; export -f python3; }
 set -u
 HERE="$(cd "$(dirname "$0")" && pwd)"; S="$HERE/../scripts/check_practice.py"
 BASE="$(mktemp -d)"; fail=0

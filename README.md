@@ -1,68 +1,50 @@
 # Praxteward
 
-An agent skill for doing substantial work of any kind well, and getting better at it: software, research, reports and presentations, data analysis, reverse engineering, or hobby projects. It plans the work, splits it into units, sets how deep each one goes, assigns owners (itself, parallel subagents, you, or a script), integrates and verifies the result, runs on its own within an authority you set, keeps everything recoverable across sessions, and learns from experience which ways of working to reuse, revise, retire, or automate. Small edits take a fast path.
+An agent skill for substantial work of any kind: software, research, reports and presentations, data analysis, reverse engineering, or hobby projects. It plans the work, splits it into units, sets how deep each one goes, assigns owners (itself, parallel subagents, you, or a script), integrates and verifies the result, runs on its own within an authority you set, keeps the work recoverable across sessions, and learns from experience which ways of working to reuse, revise, retire, or automate. Small edits take a fast path.
 
-Standard `SKILL.md` format. Works with Claude (claude.ai, Claude Code, API), OpenAI Codex and ChatGPT, and custom agent workbenches.
-
-Self-contained: no other skills or packages are required. The scripts need Python 3.8+ (standard library only), and changed-file coverage needs git.
+Standard [Agent Skills](https://agentskills.io/specification) format. The scripts need Python 3.8+ (standard library only), and changed-file coverage needs git.
 
 ## What it does
 
-| Need | How |
+| Area | Contents |
 |---|---|
-| Stay light on small tasks | A fast path at the top of `SKILL.md` handles local, reversible, fully specified changes directly |
-| Plan before doing | Plan frames the goal, audience, and done criteria, then splits the work into units with output, depth, owner, dependencies, and a check |
-| Go as deep as the work needs | Each unit is skim, standard, or deep; deep units run Explore: question ladder, competing hypotheses, primary sources, a discriminating check, a stop rule |
-| Divide the work | Owners per unit: self, parallel subagents with briefs, the operator (batched questions at review points), or a script |
-| Put it back together | Integrate merges units, resolves conflicts, checks the whole against the goal, and verifies end to end |
-| Made for someone, not generated | Craft rules: an experience frame (who receives it, in what situation, what they do next), a swap test against generic content, real material instead of filler, rules for writing, slides, guides, charts, interfaces, code, and replies, path reduction, and a generic-feel review |
-| Design principles and visual rules with measured checks | Sixteen design principles for anything perceived or operated (perception, use, effort and access), each with a check; for visual work, priority per view, a removal pass for redundant elements and cues, grouping by space before lines and boxes, overlay rules, color roles, type and spacing scales, and a finish checklist on the rendered output; `scripts/contrast.py` measures WCAG contrast and color-vision distinguishability |
-| Decide on purpose | Reason records options, evidence, and the condition that would reverse a decision |
-| Work on its own, safely | Three settings (presence, authority A0 to A3, tempo) read from what you say, such as "keep going while I sleep" or "stop circling"; fixed limits it never crosses; a stalling rule; progress counted as verified units |
-| Extend without editing the core | New domains arrive as practice cards (kinds: method, craft, check, automation) in a practice directory you own; the skill files stay unchanged |
-| Learn how to work better | Practice cards capture ways of working with their conditions, assumptions, simpler alternative, and evidence. Learning fires only on signals (rework, corrections, failures, surprises, repeats, misfits); Distill, Evolve, and Automate promote, revise, retire, or automate cards by evidence, never by scanning everything |
-| Keep long work recoverable | Orient, Checkpoint, Recover, Reconcile, Intake, Advance, and Compile handle sessions, interruptions, queues, unattended work, and final deliverables |
-| Records worth reading | Work records state method, alternatives, rationale, verification, and `path::anchor` locators (symbol, heading, slide, cell, offset); `records: minimal` keeps only a log for casual work |
-| Nothing missed | `scripts/check_records.py` checks fields, locators, registry, volume closure, and changed-file coverage |
-| Output without machine tells | Block and Fix checks for prose and code, scanned by `scripts/tell_scan.py` |
-| Subagents and workbenches | Coordinator and delegate roles, a common report block, and `contract.json` for deterministic routing |
+| Work loop | Plan, Explore, Reason, Execute, Integrate; a depth per unit (skim, standard, deep); one owner per unit |
+| Autonomy | Presence, authority A0 to A3, and tempo, read from what you say ("keep going while I sleep", "stop circling"); fixed limits; a stalling rule |
+| Continuity | Orient, Checkpoint, Recover, Reconcile, Intake, Advance, Compile; work and decision records with `path::anchor` locators, or a log only with `records: minimal` |
+| Craft | An experience frame, a swap test against generic content, form by genre and medium, design principles and visual rules with measured contrast checks |
+| Practice | Cards that capture ways of working with their conditions and evidence; Distill, Evolve, and Automate run on signals, never by scanning everything |
+| Output checks | Block and Fix checks for prose and code, English and Korean; a change rate when revising someone's text |
+| Lean code | `praxteward lean lite\|full\|ultra\|off`, `review`, `audit`, `debt`: the smallest complete change, never cutting validation, data-loss handling, security, or accessibility |
+| Web pages | `praxteward web`: copy first, a dealt palette, type pairing, and hero, a starter page, static and four-width browser checks |
+| Korean prose | `praxteward humanize`: pattern diagnosis by severity and genre, revision routes, and meaning gates on numbers, quotations, and change rate |
 
 ## Repository layout
 
 ```
-SKILL.md              entry point: fast path, work loop, depth, allocation, continuity, records, output
-contract.json         machine-readable modes, events, report, record, and output-check schema
+SKILL.md              entry point
 modes/                one procedure per mode (5 work, 7 continuity, 3 practice), numbered steps
-references/           craft, design, records, practice, output checks, principles
+references/           craft, design, output checks, records, practice, principles, lean, web, korean
 assets/templates/     INDEX, VOLUME, LOG, QUEUE, AWAY-REPORT, BRIEF, CARD, PRACTICE-INDEX
-scripts/              check_records.py, check_practice.py, tell_scan.py, contrast.py (run by the agent)
-agents/openai.yaml    Codex and ChatGPT presentation and policy
+assets/web/           palettes, type pairings, starter page and stylesheet
+scripts/              check_records, check_practice, tell_scan, contrast, ko_scan, debt_scan, page_check, deal
 --- repository only (not packaged) ---
-docs/integration.md   hooks, activation policy, workbench responsibilities
+docs/integration.md   activation policy and session hooks
 tools/                validate.py, package.py
-evals/                trigger cases and regression tests for both scripts
+evals/                eval_queries.json (triggering), evals.json (behavior), trigger-cases.md,
+                      regression tests per script, Korean calibration, recorded results
 ```
 
 ## Install
 
 | Host | Steps | Explicit call |
 |---|---|---|
-| claude.ai / Claude desktop | Download `praxteward.zip` from Releases (or run `python tools/package.py`) and upload it under Settings → Capabilities/Features → Skills. Requires code execution. | `praxteward <mode>`, `praxteward inspect` |
-| Claude Code (plugin) | `claude plugin marketplace add 2nugu/praxteward` then `claude plugin install praxteward@praxteward`; update with `claude plugin update praxteward@praxteward` | `/praxteward:praxteward` |
+| claude.ai / Claude desktop | Run `python tools/package.py` and upload `dist/praxteward.zip` under Settings → Capabilities → Skills. Requires code execution. | `praxteward <mode>`, `praxteward inspect` |
+| Claude Code (plugin) | `claude plugin marketplace add 2nugu/praxteward` then `claude plugin install praxteward@praxteward` | `/praxteward:praxteward` |
 | Claude Code (plain skill) | `git clone https://github.com/2nugu/praxteward.git ~/.claude/skills/praxteward` (personal) or into `<project>/.claude/skills/praxteward` | `/praxteward` |
 | Claude API | Upload the zip via the Skills API (`/v1/skills`); reference its `skill_id` in the container with the code execution tool | — |
-| Codex CLI / IDE | `git clone https://github.com/2nugu/praxteward.git ~/.agents/skills/praxteward` (user) or into `<repo>/.agents/skills/praxteward`; restart Codex if it does not appear | `$praxteward` or `/skills` |
-| ChatGPT | Distribute as a plugin, or create with `@skill-creator` from this folder | `@praxteward` |
-| Custom workbench | Load `name` and `description` always, `SKILL.md` on trigger, a procedure per mode; route events via `contract.json` | `praxteward <mode>` |
+| Codex CLI / IDE | `git clone https://github.com/2nugu/praxteward.git ~/.agents/skills/praxteward` (user) or into `<repo>/.agents/skills/praxteward` | `$praxteward` |
 
-Update git installs with `git pull`. Uploaded copies do not sync; re-upload after changes.
-
-### Codex notes
-
-- Skills are read from `.agents/skills` (searched from the working directory up to the repo root) and `~/.agents/skills`. Older Codex versions used `~/.codex/skills`.
-- The initial skills list is capped at about 2% of the context window, and descriptions are shortened first when many skills are installed.
-- Use `~/.codex/AGENTS.md` or a repo `AGENTS.md` for the global instructions below.
-- Disable without deleting: add `[[skills.config]]` with `path = ".../praxteward/SKILL.md"` and `enabled = false` to `~/.codex/config.toml`.
+The skill directory must be named `praxteward`, matching `name` in `SKILL.md`. Update git installs with `git pull`. Uploaded copies do not sync; re-upload after changes.
 
 ## Project setup
 
@@ -80,7 +62,7 @@ coverage_ignore:
   - "*.lock"
 ```
 
-`activation: session` loads the skill once per session in projects with records; `auto` relies on description matching; `explicit` loads only when named. See [docs/integration.md](docs/integration.md) for hooks and trade-offs.
+`activation: session` loads the skill once per session in projects with records; `auto` relies on description matching; `explicit` loads only when named. See [docs/integration.md](docs/integration.md) for the hooks.
 
 ## Recommended global instructions
 
@@ -92,23 +74,29 @@ The skill holds procedures. Global instructions only need the rules that apply w
 - Never drop a queued or mid-task request. When unattended, park decisions that need me and continue independent work.
 ```
 
-General judgment rules (objective reconstruction, evidence over agreement, scope discipline, verification) can live in your own instructions; otherwise the skill applies `references/principles.md`.
-
 ## Development
 
 ```bash
-python tools/validate.py                  # package consistency
-bash evals/run_record_tests.sh            # record-checker regression tests
-bash evals/run_tell_tests.sh              # output-check regression tests
-bash evals/run_practice_tests.sh          # practice-card regression tests
-bash evals/run_design_tests.sh            # contrast and color-distinctness tests
-# evals/scenarios.json: behavior scenarios; run each with and without the skill, on Haiku, Sonnet, and Opus
-python scripts/tell_scan.py <files>       # check docs or code before delivery
-python scripts/check_records.py <project-root> --since <git-ref>
+python tools/validate.py                  # spec frontmatter, links, mode and template consistency, manifests, fingerprint
+bash evals/run_record_tests.sh            # check_records
+bash evals/run_tell_tests.sh              # tell_scan
+bash evals/run_practice_tests.sh          # check_practice
+bash evals/run_design_tests.sh            # contrast
+bash evals/run_toolkit_tests.sh           # ko_scan, debt_scan, deal, page_check
+python evals/korean/calibrate.py --ids    # ko_scan on human vs generated Korean
 python tools/package.py                   # dist/praxteward.zip
 ```
 
-After changing the description or procedures, run the cases in `evals/trigger-cases.md` in fresh sessions.
+Every script prints its usage with `--help`.
+
+A change to the description or the procedures is kept on measurement, not on argument:
+
+- Triggering: `evals/eval_queries.json` holds queries with `should_trigger` and a fixed `train` or `validation` split. Run each query three times in a fresh session; it passes when the trigger rate is at least 0.5 for a positive and below 0.5 for a negative. Edit the description from train failures only, and choose the version by its validation pass rate.
+- Behavior: `evals/evals.json` holds a prompt, fixture files, and assertions per case. Run the affected cases with the skill and without it (or against the previous version), and grade each assertion with its evidence. Give the grader the request and the raw artifacts, never the expected answer, and run the task checks yourself. An assertion that passes in both configurations measures nothing: drop it or sharpen it.
+- Keep or discard: keep a change that raises the pass rate. At an equal pass rate, keep the shorter version. Try deletions as readily as additions; text whose removal changes no result goes.
+- Record each run under `evals/results/` as `YYYY-MM-DD-<topic>.json` with the package fingerprint from `validate.py`, the model, observed results, operator interventions, and unchecked boundaries. A passing script regression suite is not behavioral evidence.
+
+`validate.py <installed-skill-dir>` fingerprints an installed copy for comparison.
 
 ## License
 

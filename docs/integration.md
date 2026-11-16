@@ -1,16 +1,8 @@
 # Integration guide
 
-For operators and workbench builders. Not part of the installed skill.
+Not part of the installed skill.
 
-Skill selection by description is probabilistic. Anything a host can detect without judgment (session start, compaction, test failure, milestone, operator away) should be routed by the host. `contract.json` lists these events and the mode each runs.
-
-## Integration levels
-
-| Level | Host | What it adds |
-|---|---|---|
-| 0 | Any skill-capable agent | Description matching, plus `praxteward <mode>` typed by the operator |
-| 1 | Hosts with lifecycle hooks | Session-start and pre-compaction hooks inject a short routing line and the recovery summary |
-| 2 | Custom workbench | Event routing from `contract.json`, delegate briefs, report validation, queue and wake-up ownership |
+Skill selection by description is probabilistic. What a host can detect without judgment (session start, compaction) is better routed by a hook; the events and the mode each one runs are listed in `SKILL.md` under Invocation and fallbacks.
 
 ## Activation policy
 
@@ -18,13 +10,13 @@ Set `activation` in the project's `.praxteward.yaml`.
 
 | Policy | Cost | Miss risk | Fits |
 |---|---|---|---|
-| auto | ~100 tokens per session for metadata; body only when matched | The skill may not load when a project-state check was needed | Occasional project work |
-| session | Body (~1.6k tokens) once per session in projects with records | Lowest | Long-running projects, heavy agent use, workbenches |
+| auto | ~250 tokens per session for metadata; body only when matched | The skill may not load when a project-state check was needed | Occasional project work |
+| session | Body (~3.7k tokens) once per session in projects with records | Lowest | Long-running projects, heavy agent use |
 | explicit | Metadata only | Highest | Full manual control |
 
 `session` loads once per session, not per task; the fast path keeps trivial tasks short. Implement it with the hook below or with one line in the global instructions (see README).
 
-## Level 1: Claude Code hooks (`.claude/settings.json`)
+## Claude Code hooks (`.claude/settings.json`)
 
 ```json
 {
@@ -38,17 +30,6 @@ Set `activation` in the project's `.praxteward.yaml`.
 ```
 
 Other hosts: use their lifecycle hooks; Codex requires approving hooks via `/hooks`.
-
-## Level 2: workbench responsibilities
-
-1. Route: map events to modes per `contract.json`; on an event, load `SKILL.md` and only that mode's procedure.
-2. Delegate: fill `assets/templates/BRIEF.md` with file pointers, not content; set `role: delegate`.
-3. Validate: reject reports missing `report.required` fields or claiming `done` with empty `evidence`.
-4. Own records: only the coordinator, or the workbench on its behalf, writes the index and log.
-5. Queue: append every incoming operator message to the queue file before the model sees it, so mid-task messages survive compaction.
-6. Wake: for `operator_away`, schedule resumptions that re-enter Advance from the recovery summary and queue; enforce the charter's budget and stop predicates outside the model.
-7. Practice: keep the practice directory in version control; run `check_practice.py` on a schedule (for example weekly) and inject the due list into the next session; pass execution metrics (duration, retries, operator interventions) into episode lines when the host can measure them.
-8. Learn: collect routing misses and false positives from the log's `Routing notes` and adjust the description or hooks from repeated patterns.
 
 ## Limits of prompting
 

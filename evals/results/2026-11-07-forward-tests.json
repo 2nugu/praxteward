@@ -1,0 +1,67 @@
+{
+  "date": "2026-11-07",
+  "kind": "independent forward tests with parent artifact verification",
+  "git_base": "6db36e2d8aa1a1d1bc180531e4d81b3b54394a0b",
+  "package_sha256": "30d7b2c0c2f66c138aac163cee2fc1a8fcfee792e33f1a7415f388e9bc0ee447",
+  "scenario_file_sha256": "eeb9483c8811be22263b1d2558f15e7205c848d025f0bbe4a3f8dd2d9d24bd33",
+  "model_reported_by_evaluators": "Codex based on GPT-6; exact runtime model identifier not exposed",
+  "control_run_without_skill": false,
+  "cases": [
+    {
+      "id": "consolidate-policy",
+      "status": "passed",
+      "observed": "Three policy implementations became one; public consumer functions delegate to shipping_cost. No dependencies or planning documents added.",
+      "parent_checks": "21 boundary results and 3 exact negative-input exceptions across all consumers; inspected the two consumers for retired policy copies.",
+      "operator_interventions": 0,
+      "limits": "External callers and package-style imports were not exercised."
+    },
+    {
+      "id": "preserve-distinct-contracts",
+      "status": "passed",
+      "observed": "Module left unchanged; the invoice and payroll rounding contracts remained distinct.",
+      "parent_checks": "8 literal Decimal results, including positive and negative half-cent ties; source compared with the original fixture.",
+      "operator_interventions": 0,
+      "limits": "Alternate Decimal contexts and nonfinite or invalid inputs were not checked by the parent."
+    },
+    {
+      "id": "authorized-checkpoint",
+      "status": "passed",
+      "observed": "Recovery summary updated without repeated approval. Missing source files and unrun tests remained explicitly unverified.",
+      "parent_checks": "Original Entries section preserved; objective, all three source paths, in-flight status, and next checks inspected.",
+      "operator_interventions": 0,
+      "limits": "The fixture contained only the log, so implementation state could not be independently verified."
+    },
+    {
+      "id": "same-day-distill",
+      "status": "passed",
+      "observed": "Later same-day episode processed; both processed IDs retained; one candidate card linked to source evidence. Evaluator reported identical file hashes and timestamps after the second run.",
+      "parent_checks": "Processed-ID set, candidate status, source pointers, unchanged task tally, and check_practice.py with --today 2026-11-07 verified.",
+      "operator_interventions": 0,
+      "limits": "Second-run no-write observation was made by the evaluator. Original failing shell command was unavailable; the workaround was reproduced, and the card remained candidate."
+    }
+  ],
+  "regression_suites_passed": {
+    "record": 20,
+    "tell": 18,
+    "practice": 17,
+    "design": 11
+  },
+  "additional_checks_passed": [
+    "skill-creator quick validation",
+    "package validation",
+    "changed prose output scan",
+    "content fingerprint copy invariance and sensitivity",
+    "git diff --check"
+  ],
+  "corrected_test_issue": "Record regression setup failure could be reported as PASS. Mutation setup now fails the case, and the escaped git substitution in the since-last fixture was corrected.",
+  "limits": [
+    "These four small forward tests establish only the observed behaviors; they do not measure comparative quality, cost, or latency.",
+    "The installed skill was not used by these tests; evaluators explicitly loaded the source checkout."
+  ],
+  "installation": {
+    "status": "updated after explicit user approval",
+    "destination": "C:\\Users\\2nugu\\.codex\\skills\\praxteward",
+    "package_sha256": "30d7b2c0c2f66c138aac163cee2fc1a8fcfee792e33f1a7415f388e9bc0ee447",
+    "backup": "dist/praxteward-installed-before-cleanup.zip"
+  }
+}

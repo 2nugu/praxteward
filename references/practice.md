@@ -13,17 +13,19 @@ Project-only cards always live in `docs/practice`. Each directory holds `INDEX.m
 
 ## Index
 
-[PRACTICE-INDEX](../assets/templates/PRACTICE-INDEX.md) has three parts: the card table (first table, parsed by the checker), `Last distill: YYYY-MM-DD`, and the task-type tally. Task types come from the tally's list; reuse an existing type before adding one. At delivery, increment the tally row for the task's type; a type without a card reaching three triggers the `repeat` signal.
+[PRACTICE-INDEX](../assets/templates/PRACTICE-INDEX.md) holds the card table (first table, parsed by the checker), `Last distill: YYYY-MM-DD`, optional `Processed on last distill date: <episode IDs or none>`, and the task-type tally. The processed IDs prevent replay while allowing later episodes on the same date. Task types come from the tally; reuse one before adding another. At delivery, increment its count; an uncarded type reaching three triggers the `repeat` signal.
 
 ## Episode line
 
 Written in the project LOG entry at delivery, only when a signal fired:
 
 ```
-- Episode E-<project>-<YYYYMMDD>-<n>: type=<task type>; card=<P-NNN@version|none>; outcome=<met|partial|missed>; rework=<n>; corrections=<n>; signal=<rework|correction|failure|surprise|repeat|misfit>; note=<one line>
+- Episode E-<project>-<YYYYMMDD>-<n>: type=<task type>; card=<P-NNN@version|none>; outcome=<met|partial|missed>; rework=<n>; corrections=<n>; signal=<rework|correction|failure|surprise|repeat|misfit|check>; note=<one line>
 ```
 
 `outcome` judges the task goal, not whether steps ran. `corrections` counts operator redirections. Without project records, report the episode in the reply.
+
+`signal=check` names the check ID in the note and goes to the check, not to a card. Two episodes on one pattern justify narrowing it (a genre profile or threshold) or removing it. A missed defect justifies a new pattern only when the pattern separates the defect from correct text on material not written for the test, as in the Korean calibration; samples written to fit the pattern do not count. Checks are shared, so a project proposes the change to the skill instead of editing it.
 
 ## Card fields
 
@@ -44,7 +46,7 @@ Written in the project LOG entry at delivery, only when a signal fired:
 | Simpler alternative | The strongest simpler way, then `— untested` or `— <result when tried>` |
 | Transfer | cause → conditions → mechanism → verification, in domain-neutral words |
 | Automation | Level (none, checklist, decision rule, script, agent workflow, with or without approval gate) and its basis |
-| Evidence | One line each: `<project>/<deliverable> — met|partial|missed — E-id` |
+| Evidence | One line each: `<project>/<deliverable> — met|partial|missed — E-id`; source episode and check result must be retrievable through the project log or a source pointer in the card |
 | History | One line per version: date, version, change, reason |
 | Replacement | Deprecated cards only: the card or way that replaces it, or `none` |
 
@@ -57,7 +59,7 @@ Written in the project LOG entry at delivery, only when a signal fired:
 | standard | `met` in two or more distinct project/deliverable pairs, simpler alternative tried, every assumption has a check | By default, unless a Not when condition holds |
 | deprecated | An assumption failed its check, two misses where it applied, or a cheaper way met the same outcome twice | Never; kept for history with its Replacement |
 
-Narrowing scope (adding to Not when) is usually better than deprecating.
+Narrowing scope (adding to Not when) is usually better than deprecating. Promotion also requires inspecting the source episodes, observed checks, and simpler-alternative result; counts alone do not establish that a method helped. The checker validates structure, not effectiveness. Unavailable evidence leaves the card at its current status.
 
 ## At plan time
 
@@ -66,5 +68,5 @@ When Plan reads a card: if `review_by` has passed or an assumption is visibly fa
 ## Cost rules
 
 - Normal work adds at most one tally increment and, only on a signal, one episode line.
-- Distill reads only episodes after `Last distill`; Evolve reads only cards that are due or contradicted; Plan reads two indexes and at most two cards. Nothing scans all logs or all cards.
+- Distill reads from `Last distill` inclusive and skips processed IDs; Evolve reads only due or contradicted cards; Plan reads two indexes and at most two cards. Nothing scans all logs or cards.
 - Automate takes N (expected runs) from the tally rate over the card's review period. Without a tally, use the rule: automate only if the card is standard, the type has occurred three or more times, and the output can be checked automatically.

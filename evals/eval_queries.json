@@ -1,0 +1,22 @@
+[
+  {"query": "Continue the pipeline work from yesterday.", "should_trigger": true, "split": "train"},
+  {"query": "자고 올게, 쭉 해", "should_trigger": true, "split": "train"},
+  {"query": "Research the three candidate vector databases and write a 3-page summary with a comparison table.", "should_trigger": true, "split": "train"},
+  {"query": "Milestone 3 is done; update the docs and tell me what should come next.", "should_trigger": true, "split": "train"},
+  {"query": "이 보고서 초안 AI 티 좀 빼줘. 내용은 바꾸지 말고.", "should_trigger": true, "split": "train"},
+  {"query": "This is over-engineered. Give me the simplest solution that still handles the retries.", "should_trigger": true, "split": "train"},
+  {"query": "Build a demo script and slides for Friday's group meeting from docs/results.md.", "should_trigger": true, "split": "validation"},
+  {"query": "겉돌지 말고 진도 나가자", "should_trigger": true, "split": "validation"},
+  {"query": "Make a landing page for the lab's sensor dataset.", "should_trigger": true, "split": "validation"},
+  {"query": "Should we replace the ingestion queue with streaming? Decide and record why.", "should_trigger": true, "split": "validation"},
+  {"query": "What is the difference between TCP and UDP?", "should_trigger": false, "split": "train"},
+  {"query": "Rename `tmp` to `buffer` in utils.py.", "should_trigger": false, "split": "train"},
+  {"query": "이 문단 영어로 번역해줘.", "should_trigger": false, "split": "train"},
+  {"query": "What does the plan for the Friday offsite look like? Just read me agenda.md.", "should_trigger": false, "split": "train"},
+  {"query": "Fix the typo in the README title.", "should_trigger": false, "split": "train"},
+  {"query": "Which CSS property centers a div horizontally?", "should_trigger": false, "split": "train"},
+  {"query": "What's the capital of Australia?", "should_trigger": false, "split": "validation"},
+  {"query": "Change the header color to #3C5CD8.", "should_trigger": false, "split": "validation"},
+  {"query": "한국어 맞춤법에서 '되'와 '돼'는 어떻게 구분해?", "should_trigger": false, "split": "validation"},
+  {"query": "Show me the last five commits on this branch.", "should_trigger": false, "split": "validation"}
+]

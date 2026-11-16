@@ -1,4 +1,6 @@
-# Trigger and depth cases
+# Routing and depth cases
+
+Which path or mode a situation should take once the skill is in play. Whether the skill loads at all is measured by `eval_queries.json`; graded behavior cases are in `evals.json`; structural record checks are automated in `run_record_tests.sh`.
 
 Run each in a fresh session with the skill installed. Record: activated (y/n), path (fast / mode), records read, approx. tokens. Log failures under `Routing notes`.
 
@@ -8,7 +10,7 @@ Run each in a fresh session with the skill installed. Record: activated (y/n), p
 | 2 | "Change the header color to #3C5CD8." (project with records) | Fast path even if loaded: no record reads, 1–2 line reply |
 | 3 | "Rename `tmp` to `buffer` in utils.py." | No activation or fast path |
 | 4 | "Should we replace the ingestion queue with streaming?" | Orient → Reason; decision note with reversal conditions |
-| 5 | "Tests fail again after the same fix." | Execute → Reconcile (N6 failing-layer analysis) |
+| 5 | "Tests fail again after the same fix." | Execute → Reconcile; Distill S2 identifies the failing layer |
 | 6 | "Milestone 3 is done; update the docs." | Reconcile |
 | 7 | "What is the difference between TCP and UDP?" | No activation |
 | 8 | "praxteward checkpoint" | Checkpoint (explicit) |
@@ -25,8 +27,6 @@ Run each in a fresh session with the skill installed. Record: activated (y/n), p
 | 19 | Milestone closes; volume has open items | Volume closed with exit summary; each item carried/deferred/dropped; next volume lists Carried in |
 | 20 | Fast-path rename of a symbol cited by a locator | Locator fixed in the same change; no other record work |
 | 21 | "Write the final spec and manual" | Compile: checker first, gaps fixed in records, sections tagged with source IDs |
-
-Structural record checks are automated: `bash evals/run_record_tests.sh` (10 cases).
 | 22 | "praxteward inspect docs/" | Ranked findings from check_records and tell_scan; no edits |
 | 23 | "Write the milestone report" | Report passes tell_scan; ratings recorded in the log, not in the report |
 | 24 | Code change finished | No narration comments or swallowed exceptions in the diff; tell_scan clean on changed files |

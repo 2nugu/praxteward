@@ -112,6 +112,9 @@ def take_option(args, name, default):
 
 def main(argv):
     args = list(argv)
+    if "-h" in args or "--help" in args:
+        print(__doc__)
+        return 0
     try:
         if args and args[0] == "--distinct":
             limit = take_option(args, "--min-de", 10.0)

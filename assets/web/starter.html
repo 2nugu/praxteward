@@ -1,0 +1,96 @@
+<!doctype html>
+<!--
+  Praxteward web starter. Copy this file and system.css into the project, then:
+  1. Paste the :root tokens and the font link printed by scripts/deal.py.
+  2. Keep the hero variant deal.py chose and delete the others.
+  3. Replace every [[...]] marker with the real copy from the screen plan; page_check.py fails on any marker left.
+-->
+<html lang="[[lang]]">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>[[Category for buyer | Name]]</title>
+  <meta name="description" content="[[One sentence: what is sold, for whom, one hard fact]]">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- [[font link from deal.py]] -->
+  <link rel="stylesheet" href="system.css">
+</head>
+<body>
+  <header class="nav">
+    <div class="wrap">
+      <a class="brand" href="#top">[[Name]]</a>
+      <ul>
+        <li><a href="#[[section-2]]">[[Section 2]]</a></li>
+        <li><a href="#[[section-3]]">[[Section 3]]</a></li>
+        <li><a class="btn btn--primary" href="#contact">[[Verb object]]</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- Hero: keep one variant. -->
+    <section class="section hero hero--split">
+      <div class="wrap">
+        <div>
+          <h1>[[Category for buyer]]</h1>
+          <p class="muted">[[What it does, in one sentence]]</p>
+          <p class="fact"><strong>[[Hard fact]]</strong>[[What the fact measures]]</p>
+          <div class="actions">
+            <a class="btn btn--primary" href="#contact">[[Verb object]]</a>
+            <a class="btn" href="#[[section-2]]">[[Verb object]]</a>
+          </div>
+        </div>
+        <div class="visual"><img src="[[product-ui-or-photo]]" alt="[[What the image shows]]" width="1200" height="900"></div>
+      </div>
+    </section>
+
+    <section class="section hero hero--full-bleed">
+      <div class="media"><img src="[[real-photo]]" alt="[[What the photo shows]]" width="2400" height="1600"></div>
+      <div class="wrap">
+        <h1>[[Category for buyer]]</h1>
+        <p>[[Hard fact: hours, place, or what is made here]]</p>
+        <div class="actions"><a class="btn btn--primary" href="#contact">[[Verb object]]</a></div>
+      </div>
+    </section>
+
+    <section class="section" id="[[section-2]]">
+      <div class="wrap">
+        <h2>[[Claim this screen proves]]</h2>
+        <div class="grid">
+          <a class="card" href="#[[detail]]">
+            <div class="ui"><img src="[[ui-fragment]]" alt="[[Which screen of the product]]" width="800" height="500"></div>
+            <h3>[[Feature named by what it does]]</h3>
+            <p class="muted">[[One concrete result with a number]]</p>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--alt" id="[[section-3]]">
+      <div class="wrap split">
+        <div class="photo"><img src="[[real-photo]]" alt="[[What the photo shows]]" width="1200" height="1500"></div>
+        <div>
+          <h2>[[Claim]]</h2>
+          <p>[[Evidence for the claim, from real material]]</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <div class="wrap">
+        <h2>[[Verb object]]</h2>
+        <p>[[Street and district only]] · <a href="mailto:hello@[[name]].example">hello@[[name]].example</a></p>
+        <div class="actions"><a class="btn btn--primary" href="[[booking-or-signup]]">[[Verb object]]</a></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <span>© [[year]] [[Name]]</span>
+      <details><summary>Image credits</summary>[[Photographer, source, licence for each library image]]</details>
+    </div>
+  </footer>
+</body>
+</html>

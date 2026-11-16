@@ -1,0 +1,5 @@
+Evaluation fixture: recorded successful PowerShell command and literal output.
+@'
+print(6 * 7)
+'@ | python -
+42
