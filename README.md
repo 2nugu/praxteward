@@ -98,6 +98,13 @@ A change to the description or the procedures is kept on measurement, not on arg
 
 `validate.py <installed-skill-dir>` fingerprints an installed copy for comparison.
 
+## Privacy and code execution
+
+- Praxteward collects no personal data and sends nothing off the machine. It reads the project files the user points it to and writes its records (`docs/`, and practice cards in `practice_dir` when set) inside the user's own directories.
+- The skill tells the agent to run the Python scripts bundled in `scripts/`, locally, on the files being checked. They use the standard library only, make no network requests, and read no credentials. `check_records.py` runs read-only `git` commands; `page_check.py --render` uses a locally installed Playwright when one exists.
+- The plugin declares no MCP servers and no hooks.
+- Development files outside the skill (`evals/`, `tools/`) are not run by the skill. `evals/korean/calibrate.py`, when a developer runs it, downloads public Korean Wikipedia and Wikinews text for calibration.
+
 ## License
 
 MIT. See [LICENSE](LICENSE).
