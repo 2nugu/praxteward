@@ -19,5 +19,6 @@
     "lean-code",
     "web-design",
     "korean-writing"
-  ]
+  ],
+  "icon": "./.claude-plugin/icon.png"
 }
