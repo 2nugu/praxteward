@@ -22,7 +22,9 @@ expect 1 comma.md "T13"
 expect 1 bad_code.js "T21"
 expect 1 bad_code.js "T24"
 expect 0 bom.md
-expect 2 latin1.md "not UTF-8"
+T=$(mktemp -d); printf 'caf\351 TODO\n' > "$T/latin1.md"  # non-UTF-8 input, made here so the repo holds text only
+out=$(python3 "$S" "$T/latin1.md" 2>&1); code=$?; rm -rf "$T"
+if [ "$code" = 2 ] && echo "$out" | grep -q "not UTF-8"; then echo "PASS latin1.md"; else echo "FAIL latin1.md (exit $code)"; echo "$out"; fail=1; fi
 expect 2 missing.md "not found"
 expect 1 korean_bad.md "T30"
 expect 1 korean_bad.md "T31"
